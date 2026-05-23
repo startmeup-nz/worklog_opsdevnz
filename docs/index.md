@@ -2,7 +2,8 @@
 
 Configurable CLI tool for creating and managing dated development worklogs.
 
-**Version:** 0.0.1 — Planning  
+**Version:** see pyproject.toml  
+**Status:** Development
 **License:** Apache 2.0  
 **Python:** 3.14+
 

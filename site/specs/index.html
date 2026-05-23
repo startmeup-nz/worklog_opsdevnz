@@ -1,0 +1,1740 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Configurable CLI tool for creating and managing dated development worklogs">
+      
+      
+        <meta name="author" content="OpsDev.NZ">
+      
+      
+        <link rel="canonical" href="/specs/">
+      
+      
+        <link rel="prev" href="./..">
+      
+      
+        <link rel="next" href="./NFR/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="zensical-0.0.23">
+    
+    
+      
+        <title>Functional Requirements Specification - worklog-opsdevnz</title>
+      
+    
+    
+      
+        
+      
+      <link rel="stylesheet" href="../assets/stylesheets/modern/main.1e989742.min.css">
+      
+        
+          
+        
+        <link rel="stylesheet" href="../assets/stylesheets/modern/palette.dfe2e883.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,500,500i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,t)=>(e<<5)-e+t.charCodeAt(0)),0),__md_get=(e,t=localStorage,a=__md_scope)=>JSON.parse(t.getItem(a.pathname+"."+e)),__md_set=(e,t,a=localStorage,_=__md_scope)=>{try{a.setItem(_.pathname+"."+e,JSON.stringify(t))}catch(e){}},document.documentElement.setAttribute("data-platform",navigator.platform)</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#functional-requirements-specification" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="./.." title="worklog-opsdevnz" class="md-header__button md-logo" aria-label="worklog-opsdevnz" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-book-open" viewBox="0 0 24 24"><path d="M12 7v14M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-menu" viewBox="0 0 24 24"><path d="M4 5h16M4 12h16M4 19h16"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            worklog-opsdevnz
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Functional Requirements Specification
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="none" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="none" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-moon" viewBox="0 0 24 24"><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-search" viewBox="0 0 24 24"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog" aria-label="Search">
+  <button type="button" class="md-search__button">
+    Search
+  </button>
+</div>
+      
+    
+    <div class="md-header__source">
+      
+    </div>
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="./.." title="worklog-opsdevnz" class="md-nav__button md-logo" aria-label="worklog-opsdevnz" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-book-open" viewBox="0 0 24 24"><path d="M12 7v14M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>
+
+    </a>
+    worklog-opsdevnz
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="./.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Specification
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="././" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Specification
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+
+<nav class="md-nav md-nav--secondary" aria-label="On this page">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#versioning-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Versioning Model
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-documents" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Related Documents
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fr-1-worklog-entry-creation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FR-1: Worklog Entry Creation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="FR-1: Worklog Entry Creation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fr-11-basic-creation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FR-1.1: Basic Creation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fr-11a-frontmatter-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FR-1.1.A: Frontmatter Format
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fr-11b-body-generation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FR-1.1.B: Body Generation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fr-2-per-project-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FR-2: Per-Project Configuration
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="FR-2: Per-Project Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fr-21-config-discovery" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FR-2.1: Config Discovery
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fr-22-configuration-schema" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FR-2.2: Configuration Schema
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fr-23-config-initialisation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FR-2.3: Config Initialisation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fr-3-directory-structure-modes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FR-3: Directory Structure Modes
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="FR-3: Directory Structure Modes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fr-31-flat-mode-structure-flat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FR-3.1: Flat Mode (structure = "flat")
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fr-32-year-mode-structure-year-default" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FR-3.2: Year Mode (structure = "year") — default
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fr-33-year-month-mode-structure-year-month" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FR-3.3: Year-Month Mode (structure = "year-month")
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fr-4-editor-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FR-4: Editor Integration
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="FR-4: Editor Integration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fr-41-editor-resolution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FR-4.1: Editor Resolution
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fr-42-file-opening" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FR-4.2: File Opening
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fr-5-entry-listing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FR-5: Entry Listing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="FR-5: Entry Listing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fr-51-list-command" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FR-5.1: List Command
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fr-52-list-output-010" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FR-5.2: List Output (0.1.0+)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fr-6-cli-interface" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FR-6: CLI Interface
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="FR-6: CLI Interface">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fr-61-command" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FR-6.1: Command
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fr-62-global-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FR-6.2: Global Options
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fr-63-error-handling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FR-6.3: Error Handling
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fr-7-template-support-010" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FR-7: Template Support (0.1.0)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="FR-7: Template Support (0.1.0)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fr-71-custom-templates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FR-7.1: Custom Templates
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fr-72-retro-templates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FR-7.2: Retro Templates
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#acceptance-criteria" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Acceptance Criteria
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Acceptance Criteria">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#001-staging-complete-when" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.0.1 Staging Complete When:
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#002-mvp-complete-when" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.0.2 MVP Complete When:
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#010-mvp-complete-when" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.1.0 MVP Complete When:
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#implementation-status" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Implementation Status
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Implementation Status">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#v001-staging-complete" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        v0.0.1 (staging) — Complete
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#v002-current" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        v0.0.2 (current)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="./NFR/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Non-Functional Requirements
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../stories/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    User Stories
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../design/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Design Decisions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--secondary" aria-label="On this page">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#versioning-model" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Versioning Model
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related-documents" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Related Documents
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fr-1-worklog-entry-creation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FR-1: Worklog Entry Creation
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="FR-1: Worklog Entry Creation">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fr-11-basic-creation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FR-1.1: Basic Creation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fr-11a-frontmatter-format" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FR-1.1.A: Frontmatter Format
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fr-11b-body-generation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FR-1.1.B: Body Generation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fr-2-per-project-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FR-2: Per-Project Configuration
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="FR-2: Per-Project Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fr-21-config-discovery" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FR-2.1: Config Discovery
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fr-22-configuration-schema" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FR-2.2: Configuration Schema
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fr-23-config-initialisation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FR-2.3: Config Initialisation
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fr-3-directory-structure-modes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FR-3: Directory Structure Modes
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="FR-3: Directory Structure Modes">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fr-31-flat-mode-structure-flat" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FR-3.1: Flat Mode (structure = "flat")
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fr-32-year-mode-structure-year-default" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FR-3.2: Year Mode (structure = "year") — default
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fr-33-year-month-mode-structure-year-month" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FR-3.3: Year-Month Mode (structure = "year-month")
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fr-4-editor-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FR-4: Editor Integration
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="FR-4: Editor Integration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fr-41-editor-resolution" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FR-4.1: Editor Resolution
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fr-42-file-opening" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FR-4.2: File Opening
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fr-5-entry-listing" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FR-5: Entry Listing
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="FR-5: Entry Listing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fr-51-list-command" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FR-5.1: List Command
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fr-52-list-output-010" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FR-5.2: List Output (0.1.0+)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fr-6-cli-interface" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FR-6: CLI Interface
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="FR-6: CLI Interface">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fr-61-command" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FR-6.1: Command
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fr-62-global-options" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FR-6.2: Global Options
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fr-63-error-handling" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FR-6.3: Error Handling
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#fr-7-template-support-010" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FR-7: Template Support (0.1.0)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="FR-7: Template Support (0.1.0)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#fr-71-custom-templates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FR-7.1: Custom Templates
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fr-72-retro-templates" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        FR-7.2: Retro Templates
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#acceptance-criteria" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Acceptance Criteria
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Acceptance Criteria">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#001-staging-complete-when" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.0.1 Staging Complete When:
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#002-mvp-complete-when" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.0.2 MVP Complete When:
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#010-mvp-complete-when" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        0.1.0 MVP Complete When:
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#implementation-status" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Implementation Status
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Implementation Status">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#v001-staging-complete" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        v0.0.1 (staging) — Complete
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#v002-current" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        v0.0.2 (current)
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+                
+
+
+
+  
+
+
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+<h1 id="functional-requirements-specification">Functional Requirements Specification<a class="headerlink" href="#functional-requirements-specification" title="Permanent link">&para;</a></h1>
+<p><strong>Module:</strong> worklog-opsdevnz<br />
+<strong>Module Version:</strong> see <code>pyproject.toml</code><br />
+<strong>Spec Last Updated:</strong> 2026-05-23 (from git history)<br />
+<strong>Status:</strong> Draft</p>
+<hr />
+<h2 id="versioning-model">Versioning Model<a class="headerlink" href="#versioning-model" title="Permanent link">&para;</a></h2>
+<p>This spec follows the OpsDev.nz versioning model:</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Source</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Module Version</td>
+<td><code>pyproject.toml</code></td>
+<td>Version of the module being specified</td>
+</tr>
+<tr>
+<td>Spec Last Updated</td>
+<td>Git history</td>
+<td>When this spec was last modified</td>
+</tr>
+</tbody>
+</table>
+<p>Use <code>specmaint sync-metadata</code> to sync both fields from their sources.</p>
+<hr />
+<h2 id="related-documents">Related Documents<a class="headerlink" href="#related-documents" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="NFR/">Non-Functional Requirements</a> - Code quality, security, and design guidelines</li>
+<li><a href="../design/">Design Decisions</a> - Architecture and integration decisions</li>
+<li><a href="../stories/">User Stories</a> - Persona-driven narratives</li>
+</ul>
+<hr />
+<h2 id="fr-1-worklog-entry-creation">FR-1: Worklog Entry Creation<a class="headerlink" href="#fr-1-worklog-entry-creation" title="Permanent link">&para;</a></h2>
+<h3 id="fr-11-basic-creation">FR-1.1: Basic Creation<a class="headerlink" href="#fr-11-basic-creation" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>FR-1.1.1</strong>: Tool MUST create a new Markdown file with YAML frontmatter containing
+  <code>title</code>, <code>date</code>, <code>author</code>, <code>tags</code>, and <code>draft</code> fields</li>
+<li><strong>FR-1.1.2</strong>: Tool MUST default to today's date when no <code>-p</code> / <code>--previous</code> flag provided</li>
+<li><strong>FR-1.1.3</strong>: Tool MUST use <code>-p</code> / <code>--previous</code> to open yesterday's worklog</li>
+<li><strong>FR-1.1.4</strong>: Tool MUST NOT overwrite existing entries — if a file already exists for the
+  given date, it MUST open the existing file instead</li>
+</ul>
+<h3 id="fr-11a-frontmatter-format">FR-1.1.A: Frontmatter Format<a class="headerlink" href="#fr-11a-frontmatter-format" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>FR-1.1.A.1</strong>: Frontmatter MUST use YAML format delimited by <code>---</code> markers</li>
+<li><strong>FR-1.1.A.2</strong>: <code>title</code> field MUST follow the pattern <code>"Work Log - {date}"</code></li>
+<li><strong>FR-1.1.A.3</strong>: <code>date</code> field MUST be ISO 8601 format (<code>YYYY-MM-DD</code>)</li>
+<li><strong>FR-1.1.A.4</strong>: <code>author</code> field MUST come from <code>worklog.toml</code> config</li>
+<li><strong>FR-1.1.A.5</strong>: <code>tags</code> field MUST be a YAML list from <code>default_tags</code> in config</li>
+<li><strong>FR-1.1.A.6</strong>: <code>draft</code> field MUST default to <code>false</code></li>
+</ul>
+<h3 id="fr-11b-body-generation">FR-1.1.B: Body Generation<a class="headerlink" href="#fr-11b-body-generation" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>FR-1.1.B.1</strong>: Tool MUST generate section headers from the <code>sections</code> list in config</li>
+<li><strong>FR-1.1.B.2</strong>: Each section MUST be an H2 heading (<code>## Title</code>)</li>
+<li><strong>FR-1.1.B.3</strong>: Sections MUST appear in the order defined in config</li>
+<li><strong>FR-1.1.B.4</strong>: A blank line MUST separate frontmatter from the first section heading</li>
+</ul>
+<hr />
+<h2 id="fr-2-per-project-configuration">FR-2: Per-Project Configuration<a class="headerlink" href="#fr-2-per-project-configuration" title="Permanent link">&para;</a></h2>
+<h3 id="fr-21-config-discovery">FR-2.1: Config Discovery<a class="headerlink" href="#fr-21-config-discovery" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>FR-2.1.1</strong>: Tool MUST search for <code>worklog.toml</code>, <code>worklog.yaml</code>, or <code>worklog.yml</code>
+  starting from the current working directory and walking up to the filesystem root</li>
+<li><strong>FR-2.1.2</strong>: Tool MUST use the first config file found</li>
+<li><strong>FR-2.1.3</strong>: If no config file is found, tool MUST use built-in defaults</li>
+</ul>
+<h3 id="fr-22-configuration-schema">FR-2.2: Configuration Schema<a class="headerlink" href="#fr-22-configuration-schema" title="Permanent link">&para;</a></h3>
+<p>The <code>worklog.toml</code> file supports the following fields:</p>
+<table>
+<thead>
+<tr>
+<th>Field</th>
+<th>Type</th>
+<th>Required</th>
+<th>Default</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>worklog_dir</code></td>
+<td>string</td>
+<td>No</td>
+<td><code>"docs/worklog"</code></td>
+<td>Base directory for worklog files</td>
+</tr>
+<tr>
+<td><code>structure</code></td>
+<td>string</td>
+<td>No</td>
+<td><code>"year"</code></td>
+<td>Directory structure: <code>"flat"</code>, <code>"year"</code>, <code>"year-month"</code></td>
+</tr>
+<tr>
+<td><code>filename_pattern</code></td>
+<td>string</td>
+<td>No</td>
+<td><code>"{day}-{month}-{year}-{suffix}.md"</code></td>
+<td>Filename template. Default: <code>23-05-2026-worklog.md</code></td>
+</tr>
+<tr>
+<td><code>filename_suffix</code></td>
+<td>string</td>
+<td>No</td>
+<td><code>"worklog"</code></td>
+<td>Configurable suffix appended to the filename</td>
+</tr>
+<tr>
+<td><code>author</code></td>
+<td>string</td>
+<td>No</td>
+<td><code>$USER</code> or <code>"unknown"</code></td>
+<td>Default author name</td>
+</tr>
+<tr>
+<td><code>default_tags</code></td>
+<td>list</td>
+<td>No</td>
+<td><code>["internal", "log"]</code></td>
+<td>Default YAML tags</td>
+</tr>
+<tr>
+<td><code>sections</code></td>
+<td>list</td>
+<td>No</td>
+<td>(see defaults)</td>
+<td>Ordered section headers</td>
+</tr>
+</tbody>
+</table>
+<h3 id="fr-23-config-initialisation">FR-2.3: Config Initialisation<a class="headerlink" href="#fr-23-config-initialisation" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>FR-2.3.1</strong>: <code>worklog-opsdevnz init</code> MUST create a <code>worklog.toml</code> in the current directory</li>
+<li><strong>FR-2.3.2</strong>: Tool MUST NOT overwrite an existing config file</li>
+<li><strong>FR-2.3.3</strong>: Generated config MUST include all default fields with commented explanations</li>
+</ul>
+<hr />
+<h2 id="fr-3-directory-structure-modes">FR-3: Directory Structure Modes<a class="headerlink" href="#fr-3-directory-structure-modes" title="Permanent link">&para;</a></h2>
+<h3 id="fr-31-flat-mode-structure-flat">FR-3.1: Flat Mode (<code>structure = "flat"</code>)<a class="headerlink" href="#fr-31-flat-mode-structure-flat" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>FR-3.1.1</strong>: All worklog files placed directly in <code>worklog_dir</code></li>
+<li><strong>FR-3.1.2</strong>: Filename: <code>YYYY-MM-DD-{suffix}.md</code> (year first to sort correctly)</li>
+</ul>
+<h3 id="fr-32-year-mode-structure-year-default">FR-3.2: Year Mode (<code>structure = "year"</code>) — default<a class="headerlink" href="#fr-32-year-mode-structure-year-default" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>FR-3.2.1</strong>: Files placed in <code>worklog_dir/YYYY/</code></li>
+<li><strong>FR-3.2.2</strong>: Filename: <code>DD-MM-YYYY-{suffix}.md</code></li>
+<li><strong>FR-3.2.3</strong>: Example: <code>docs/worklog/2026/23-05-2026-worklog.md</code></li>
+</ul>
+<h3 id="fr-33-year-month-mode-structure-year-month">FR-3.3: Year-Month Mode (<code>structure = "year-month"</code>)<a class="headerlink" href="#fr-33-year-month-mode-structure-year-month" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>FR-3.3.1</strong>: Files placed in <code>worklog_dir/YYYY/MM/</code></li>
+<li><strong>FR-3.3.2</strong>: Filename: <code>DD-MM-YYYY-{suffix}.md</code></li>
+<li><strong>FR-3.3.3</strong>: Example: <code>docs/worklog/2026/05/23-05-2026-worklog.md</code></li>
+</ul>
+<hr />
+<h2 id="fr-4-editor-integration">FR-4: Editor Integration<a class="headerlink" href="#fr-4-editor-integration" title="Permanent link">&para;</a></h2>
+<h3 id="fr-41-editor-resolution">FR-4.1: Editor Resolution<a class="headerlink" href="#fr-41-editor-resolution" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>FR-4.1.1</strong>: Tool MUST check for editor in this order:</li>
+<li><code>-e</code> / <code>--editor</code> CLI argument</li>
+<li><code>$VISUAL</code> environment variable</li>
+<li><code>$EDITOR</code> environment variable</li>
+<li><strong>FR-4.1.2</strong>: If no editor is configured, tool MUST print the file path and exit cleanly</li>
+<li><strong>FR-4.1.3</strong>: Tool MUST resolve the editor command via <code>shutil.which()</code> and report
+  if not found in PATH</li>
+</ul>
+<h3 id="fr-42-file-opening">FR-4.2: File Opening<a class="headerlink" href="#fr-42-file-opening" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>FR-4.2.1</strong>: Tool MUST invoke the editor with the worklog file path as argument</li>
+<li><strong>FR-4.2.2</strong>: Tool MUST wait for the editor process to complete before exiting</li>
+</ul>
+<hr />
+<h2 id="fr-5-entry-listing">FR-5: Entry Listing<a class="headerlink" href="#fr-5-entry-listing" title="Permanent link">&para;</a></h2>
+<h3 id="fr-51-list-command">FR-5.1: List Command<a class="headerlink" href="#fr-51-list-command" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>FR-5.1.1</strong>: <code>worklog-opsdevnz list</code> MUST find all <code>.md</code> files under <code>worklog_dir</code></li>
+<li><strong>FR-5.1.2</strong>: Tool MUST exclude <code>index.md</code>, <code>template.md</code>, and <code>retro-template.md</code>
+  from listing</li>
+<li><strong>FR-5.1.3</strong>: Entries MUST be sorted by date (newest first)</li>
+<li><strong>FR-5.1.4</strong>: Output MUST show the relative path from <code>worklog_dir</code></li>
+</ul>
+<h3 id="fr-52-list-output-010">FR-5.2: List Output (0.1.0+)<a class="headerlink" href="#fr-52-list-output-010" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>FR-5.2.1</strong>: Tool SHOULD parse frontmatter to display title, date, and tags</li>
+<li><strong>FR-5.2.2</strong>: Output SHOULD use Rich for formatted table display</li>
+</ul>
+<hr />
+<h2 id="fr-6-cli-interface">FR-6: CLI Interface<a class="headerlink" href="#fr-6-cli-interface" title="Permanent link">&para;</a></h2>
+<h3 id="fr-61-command">FR-6.1: Command<a class="headerlink" href="#fr-61-command" title="Permanent link">&para;</a></h3>
+<p><code>worklog-opsdevnz</code> — create or open today's worklog (default, no args required).
+<code>list</code> and <code>init</code> subcommands are planned for future versions.</p>
+<h3 id="fr-62-global-options">FR-6.2: Global Options<a class="headerlink" href="#fr-62-global-options" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>-p</code>, <code>--previous</code></td>
+<td>Open yesterday's worklog instead of today's</td>
+</tr>
+<tr>
+<td><code>-e</code>, <code>--editor</code></td>
+<td>Override editor command for this run</td>
+</tr>
+</tbody>
+</table>
+<h3 id="fr-63-error-handling">FR-6.3: Error Handling<a class="headerlink" href="#fr-63-error-handling" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>FR-6.3.1</strong>: Invalid date format MUST produce a clear error message and non-zero exit</li>
+<li><strong>FR-6.3.2</strong>: Missing <code>worklog_dir</code> MUST produce a clear error message</li>
+<li><strong>FR-6.3.3</strong>: All errors MUST write to stderr</li>
+</ul>
+<hr />
+<h2 id="fr-7-template-support-010">FR-7: Template Support (0.1.0)<a class="headerlink" href="#fr-7-template-support-010" title="Permanent link">&para;</a></h2>
+<h3 id="fr-71-custom-templates">FR-7.1: Custom Templates<a class="headerlink" href="#fr-71-custom-templates" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>FR-7.1.1</strong>: Tool MUST support a <code>template</code> field in config pointing to a Markdown file</li>
+<li><strong>FR-7.1.2</strong>: Template files MUST support <code>{{DATE}}</code> and <code>{{TITLE}}</code> placeholders</li>
+<li><strong>FR-7.1.3</strong>: If no template specified, tool MUST use the built-in default template</li>
+</ul>
+<h3 id="fr-72-retro-templates">FR-7.2: Retro Templates<a class="headerlink" href="#fr-72-retro-templates" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>FR-7.2.1</strong>: Tool MUST support a separate <code>retro_template</code> field in config</li>
+<li><strong>FR-7.2.2</strong>: <code>worklog-opsdevnz create --retro</code> MUST use the retro template</li>
+</ul>
+<hr />
+<h2 id="acceptance-criteria">Acceptance Criteria<a class="headerlink" href="#acceptance-criteria" title="Permanent link">&para;</a></h2>
+<h3 id="001-staging-complete-when">0.0.1 Staging Complete When:<a class="headerlink" href="#001-staging-complete-when" title="Permanent link">&para;</a></h3>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Module directory structure created under <code>modules/worklog_opsdevnz/</code></li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>pyproject.toml</code> with correct metadata and dependencies</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Functional and non-functional requirements documented</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Design decision documented for Zensical blog integration (deferred)</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Prototype <code>scripts/worklog.py</code> from opsdev.nz reviewed and mapped to requirements</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Empty <code>src/worklog_opsdevnz/</code> package scaffolded</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Empty <code>tests/</code> directory scaffolded</li>
+</ul>
+<h3 id="002-mvp-complete-when">0.0.2 MVP Complete When:<a class="headerlink" href="#002-mvp-complete-when" title="Permanent link">&para;</a></h3>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>worklog-opsdevnz</code> (no args) creates today's worklog with YAML frontmatter and config-driven sections</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>-p</code> / <code>--previous</code> opens yesterday's worklog</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>-e</code> / <code>--editor</code> overrides the configured editor</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Config discovery walks up the tree, falls back to defaults</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Three structure modes work: flat, year, year-month</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Filename follows <code>DD-MM-YYYY-{suffix}.md</code> (year/month modes) or <code>YYYY-MM-DD-{suffix}.md</code> (flat)</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Tests cover config loading, path resolution, frontmatter generation</li>
+</ul>
+<h3 id="010-mvp-complete-when">0.1.0 MVP Complete When:<a class="headerlink" href="#010-mvp-complete-when" title="Permanent link">&para;</a></h3>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>create</code> command works with all three structure modes</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>list</code> command sorts by date and shows frontmatter metadata</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> <code>init</code> command generates valid <code>worklog.toml</code></li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Editor integration works with <code>$VISUAL</code> / <code>$EDITOR</code></li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Template support (custom + retro) implemented</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Tests cover config loading, path resolution, frontmatter generation</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled/><span class="task-list-indicator"></span></label> Published to PyPI as <code>worklog-opsdevnz</code></li>
+</ul>
+<hr />
+<h2 id="implementation-status">Implementation Status<a class="headerlink" href="#implementation-status" title="Permanent link">&para;</a></h2>
+<h3 id="v001-staging-complete">v0.0.1 (staging) — Complete<a class="headerlink" href="#v001-staging-complete" title="Permanent link">&para;</a></h3>
+<ul class="task-list">
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Module scaffolded with template</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> pyproject.toml with metadata and dependencies</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> Specs, stories, and design docs in place</li>
+<li class="task-list-item"><label class="task-list-control"><input type="checkbox" disabled checked/><span class="task-list-indicator"></span></label> GitHub Actions CI and Dependabot configured</li>
+</ul>
+<h3 id="v002-current">v0.0.2 (current)<a class="headerlink" href="#v002-current" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>FR</th>
+<th>Requirement</th>
+<th>Status</th>
+<th>Evidence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FR-1.1</td>
+<td>Basic creation with frontmatter + sections</td>
+<td>📋 Planned</td>
+<td>Porting from prototype</td>
+</tr>
+<tr>
+<td>FR-2.1</td>
+<td>Config discovery (TOML/YAML, walk-up, defaults)</td>
+<td>📋 Planned</td>
+<td>Porting from prototype</td>
+</tr>
+<tr>
+<td>FR-3.1-3.3</td>
+<td>Structure modes (flat/year/year-month)</td>
+<td>📋 Planned</td>
+<td>Porting from prototype</td>
+</tr>
+<tr>
+<td>FR-4.1-4.2</td>
+<td>Editor integration</td>
+<td>📋 Planned</td>
+<td>Porting from prototype</td>
+</tr>
+<tr>
+<td>FR-6.1-6.3</td>
+<td>Click CLI with <code>-p</code> and <code>-e</code> flags</td>
+<td>📋 Planned</td>
+<td>New implementation</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<p><strong>Document:</strong> specs/README.md<br />
+<strong>Module:</strong> worklog-opsdevnz<br />
+<strong>Version:</strong> see pyproject.toml</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-circle-arrow-up" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m16 12-4-4-4 4M12 16V8"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="./.." class="md-footer__link md-footer__link--prev" aria-label="Previous: Getting Started">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-arrow-left" viewBox="0 0 24 24"><path d="m12 19-7-7 7-7M19 12H5"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Getting Started
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="./NFR/" class="md-footer__link md-footer__link--next" aria-label="Next: Non-Functional Requirements">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                Non-Functional Requirements
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-arrow-right" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2026 OpsDev.NZ
+
+    </div>
+  
+  
+    Made with
+    <a href="https://zensical.org/" target="_blank" rel="noopener">
+      Zensical
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      
+      <script id="__config" type="application/json">{"annotate":null,"base":"..","features":["announce.dismiss","content.code.annotate","content.code.copy","content.code.select","content.footnote.tooltips","content.tabs.link","content.tooltips","navigation.footer","navigation.indexes","navigation.instant","navigation.instant.prefetch","navigation.path","navigation.sections","navigation.top","navigation.tracking","search.highlight"],"search":"../assets/javascripts/workers/search.e2d2d235.min.js","tags":null,"translations":{"clipboard.copied":"Copied to clipboard","clipboard.copy":"Copy to clipboard","search.result.more.one":"1 more on this page","search.result.more.other":"# more on this page","search.result.none":"No matching documents","search.result.one":"1 matching document","search.result.other":"# matching documents","search.result.placeholder":"Type to start searching","search.result.term.missing":"Missing","select.version":"Select version"},"version":null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.5fcf0de6.min.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,813 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Configurable CLI tool for creating and managing dated development worklogs">
+      
+      
+        <meta name="author" content="OpsDev.NZ">
+      
+      
+        <link rel="canonical" href="/design/worklog-as-blog/">
+      
+      
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="zensical-0.0.23">
+    
+    
+      
+        <title>Design Decision: Worklog as Blog via Zensical - worklog-opsdevnz</title>
+      
+    
+    
+      
+        
+      
+      <link rel="stylesheet" href="../../assets/stylesheets/modern/main.1e989742.min.css">
+      
+        
+          
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/modern/palette.dfe2e883.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,300i,400,400i,500,500i,700,700i%7CJetBrains+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Inter";--md-code-font:"JetBrains Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,t)=>(e<<5)-e+t.charCodeAt(0)),0),__md_get=(e,t=localStorage,a=__md_scope)=>JSON.parse(t.getItem(a.pathname+"."+e)),__md_set=(e,t,a=localStorage,_=__md_scope)=>{try{a.setItem(_.pathname+"."+e,JSON.stringify(t))}catch(e){}},document.documentElement.setAttribute("data-platform",navigator.platform)</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#design-decision-worklog-as-blog-via-zensical" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="worklog-opsdevnz" class="md-header__button md-logo" aria-label="worklog-opsdevnz" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-book-open" viewBox="0 0 24 24"><path d="M12 7v14M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-menu" viewBox="0 0 24 24"><path d="M4 5h16M4 12h16M4 19h16"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            worklog-opsdevnz
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Design Decision: Worklog as Blog via Zensical
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="none" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="none" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-moon" viewBox="0 0 24 24"><path d="M20.985 12.486a9 9 0 1 1-9.473-9.472c.405-.022.617.46.402.803a6 6 0 0 0 8.268 8.268c.344-.215.825-.004.803.401"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-search" viewBox="0 0 24 24"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog" aria-label="Search">
+  <button type="button" class="md-search__button">
+    Search
+  </button>
+</div>
+      
+    
+    <div class="md-header__source">
+      
+    </div>
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="worklog-opsdevnz" class="md-nav__button md-logo" aria-label="worklog-opsdevnz" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-book-open" viewBox="0 0 24 24"><path d="M12 7v14M3 18a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h5a4 4 0 0 1 4 4 4 4 0 0 1 4-4h5a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1h-6a3 3 0 0 0-3 3 3 3 0 0 0-3-3z"/></svg>
+
+    </a>
+    worklog-opsdevnz
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Getting Started
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../specs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Specification
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../specs/NFR/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Non-Functional Requirements
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../stories/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    User Stories
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Design Decisions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+<nav class="md-nav md-nav--secondary" aria-label="On this page">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      On this page
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#problem-statement" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Problem Statement
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#options-considered" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Options Considered
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Options Considered">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#option-a-integrate-with-zensical-blog" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Option A: Integrate with Zensical Blog
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#option-b-standalone-tool-auto-generated-index" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Option B: Standalone Tool + Auto-Generated Index
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#option-c-hybrid-standalone-zensical-compatible-output" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Option C: Hybrid — Standalone + Zensical-Compatible Output
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#decision-option-c-hybrid" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Decision: Option C (Hybrid)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Decision: Option C (Hybrid)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#rationale" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Rationale
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-this-means-for-001-010" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What This Means for 0.0.1 / 0.1.0
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#recommended-directory-structure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Recommended Directory Structure
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#zensical-limitations-to-track" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Zensical Limitations to Track
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#ux-requirements-2026-05-22" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        UX Requirements (2026-05-22)
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="UX Requirements (2026-05-22)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#how-zensical-handles-this" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How Zensical handles this
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#related" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Related
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+                
+
+
+
+  
+
+
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+<h1 id="design-decision-worklog-as-blog-via-zensical">Design Decision: Worklog as Blog via Zensical<a class="headerlink" href="#design-decision-worklog-as-blog-via-zensical" title="Permanent link">&para;</a></h1>
+<p><strong>Status:</strong> Decision — Blog integration deferred<br />
+<strong>Created:</strong> 2026-04-28<br />
+<strong>Spec Reference:</strong> FR-1 (entry creation), FR-5 (listing)</p>
+<hr />
+<h2 id="problem-statement">Problem Statement<a class="headerlink" href="#problem-statement" title="Permanent link">&para;</a></h2>
+<p>Worklog entries are structurally similar to blog posts: dated, frontmatter-tagged
+Markdown files with an author and optional tags. Other teams using our worklog
+pattern have asked whether we should integrate with Zensical's blog feature to
+get chronological navigation, tag filtering, and RSS feeds.</p>
+<p>The question: <strong>Should worklog-opsdevnz integrate with Zensical's blog system,
+or remain a standalone file-management tool?</strong></p>
+<hr />
+<h2 id="options-considered">Options Considered<a class="headerlink" href="#options-considered" title="Permanent link">&para;</a></h2>
+<h3 id="option-a-integrate-with-zensical-blog">Option A: Integrate with Zensical Blog<a class="headerlink" href="#option-a-integrate-with-zensical-blog" title="Permanent link">&para;</a></h3>
+<p>Treat worklogs as a Zensical blog collection. Leverage Zensical's built-in
+chronological ordering, tag pages, and RSS generation.</p>
+<p><strong>Pros:</strong>
+- Chronological navigation out of the box
+- Tag filtering and author pages
+- RSS feed for worklog entries
+- Consistent with how blogs work in Zensical</p>
+<p><strong>Cons:</strong>
+- Zensical auto-navigation sorts by filename/folder alphabetically, not by
+  <code>date</code> frontmatter — worklogs need date ordering
+- Flat structure doesn't scale (100+ entries in one directory)
+- Year or year-month structure breaks chronological display in auto-nav
+- Zensical has no documented mechanism for custom section labels with
+  auto-navigation (we already hit this with <code>dns-as-code</code> → "Dns As Code")
+- Would couple worklog-opsdevnz to Zensical, reducing its usefulness as a
+  standalone tool for non-Zensical projects
+- Requires investigation into Zensical plugin architecture or feature request
+- <strong>Time cost unknown</strong> — we have end-of-month beancount reconciliation and
+  ledger security review taking priority</p>
+<h3 id="option-b-standalone-tool-auto-generated-index">Option B: Standalone Tool + Auto-Generated Index<a class="headerlink" href="#option-b-standalone-tool-auto-generated-index" title="Permanent link">&para;</a></h3>
+<p>Keep worklog-opsdevnz as a standalone CLI. Add an <code>index</code> subcommand that
+generates a reverse-chronological <code>index.md</code> from existing entries.</p>
+<p><strong>Pros:</strong>
+- No dependency on Zensical — works with any static site generator
+- <code>index.md</code> provides chronological listing regardless of directory structure
+- Can be enhanced later with Zensical integration if/when needed
+- Lower time cost — we already have the prototype, just need to package it
+- Other teams can adopt the tool without adopting Zensical</p>
+<p><strong>Cons:</strong>
+- No RSS feed (would need separate tool or Zensical blog integration later)
+- No tag filtering pages (would need Zensical or manual index generation)
+- Navigation in Zensical sidebar still alphabetical, not chronological</p>
+<h3 id="option-c-hybrid-standalone-zensical-compatible-output">Option C: Hybrid — Standalone + Zensical-Compatible Output<a class="headerlink" href="#option-c-hybrid-standalone-zensical-compatible-output" title="Permanent link">&para;</a></h3>
+<p>Build the standalone tool (Option B) but ensure the frontmatter and file
+structure are Zensical-blog-compatible. When a project wants blog features,
+they configure Zensical to treat the worklog directory as a blog collection.</p>
+<p><strong>Pros:</strong>
+- Best of both worlds: standalone now, blog-ready later
+- Zero coupling to Zensical in the core tool
+- Migration path is trivial: just add Zensical config</p>
+<p><strong>Cons:</strong>
+- Requires understanding Zensical's blog collection format
+- Still no chronological sidebar navigation without Zensical changes</p>
+<hr />
+<h2 id="decision-option-c-hybrid">Decision: Option C (Hybrid)<a class="headerlink" href="#decision-option-c-hybrid" title="Permanent link">&para;</a></h2>
+<p><strong>We will build worklog-opsdevnz as a standalone CLI tool (Option B) with
+Zensical-compatible frontmatter and structure (Option C). Blog integration
+is explicitly out of scope for 0.0.1 and 0.1.0.</strong></p>
+<h3 id="rationale">Rationale<a class="headerlink" href="#rationale" title="Permanent link">&para;</a></h3>
+<ol>
+<li>
+<p><strong>Time constraint</strong> — End-of-month beancount reconciliation and ledger
+   security review are the sprint priorities. Blog integration research is
+   an unknown time sink.</p>
+</li>
+<li>
+<p><strong>Standalone value first</strong> — The core problem is standardising the ad-hoc
+   worklog scripts across three projects. That problem is solved by packaging
+   the existing prototype. Blog features are a nice-to-have.</p>
+</li>
+<li>
+<p><strong>No coupling</strong> — Other teams asking for this tool may not use Zensical.
+   Keeping it standalone maximises adoption.</p>
+</li>
+<li>
+<p><strong>Migration path is trivial</strong> — If we later decide to integrate with
+   Zensical blog, the frontmatter format is already compatible. The only
+   change would be adding Zensical-specific config to the consuming project.</p>
+</li>
+</ol>
+<h3 id="what-this-means-for-001-010">What This Means for 0.0.1 / 0.1.0<a class="headerlink" href="#what-this-means-for-001-010" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>In scope:</strong> Create, list, init commands. Config-driven templates. Three
+  structure modes. Editor integration.</li>
+<li><strong>Out of scope:</strong> Zensical blog integration, RSS feeds, tag pages,
+  chronological sidebar navigation.</li>
+<li><strong>Future consideration:</strong> <code>worklog-opsdevnz generate-index</code> subcommand
+  that produces a reverse-chronological <code>index.md</code> with links, dates, and
+  tags. This would solve the navigation problem without Zensical coupling.</li>
+</ul>
+<h3 id="recommended-directory-structure">Recommended Directory Structure<a class="headerlink" href="#recommended-directory-structure" title="Permanent link">&para;</a></h3>
+<p>For projects using Zensical, we recommend <code>year-month</code> structure:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>docs/worklog/
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>├── index.md              # Auto-generated by worklog-opsdevnz (future)
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>├── 2026/
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>│   ├── 04/
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>│   │   ├── 2026-04-28-module-scaffolding.md
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>│   │   └── 2026-04-27-python-3-14-maintenance.md
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>│   └── 03/
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>│       └── 2026-03-28-worklog.md
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>└── 2025/
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>    └── 12/
+</span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>        └── 2025-12-15-year-end-review.md
+</span></code></pre></div>
+<p>This keeps directories manageable (10-30 entries each) and enables archive
+browsing. The <code>index.md</code> (auto-generated) provides the chronological listing
+that Zensical auto-navigation cannot.</p>
+<h3 id="zensical-limitations-to-track">Zensical Limitations to Track<a class="headerlink" href="#zensical-limitations-to-track" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Limitation</th>
+<th>Impact</th>
+<th>Workaround</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Auto-nav sorts alphabetically, not by date</td>
+<td>Sidebar shows entries out of order</td>
+<td>Auto-generated <code>index.md</code> with correct ordering</td>
+</tr>
+<tr>
+<td>No custom section labels in auto-nav</td>
+<td><code>dns-as-code</code> → "Dns As Code"</td>
+<td>Use explicit nav for section labels, auto for entries</td>
+</tr>
+<tr>
+<td>No glob patterns in nav config</td>
+<td>Can't auto-include all worklog files</td>
+<td>Auto-discovery mode (already supported)</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="ux-requirements-2026-05-22">UX Requirements (2026-05-22)<a class="headerlink" href="#ux-requirements-2026-05-22" title="Permanent link">&para;</a></h2>
+<p>From opsdev: the worklog should feel like a blog, not a file listing.</p>
+<ol>
+<li>
+<p><strong>No sidebar clutter</strong> — individual worklog entries must not appear as links in
+   the Zensical navigation sidebar. Only the worklog index/landing page should
+   appear.</p>
+</li>
+<li>
+<p><strong>Browse by date</strong> — entries should be navigable chronologically (reverse
+   chronological listing), with clear date grouping (year → month).</p>
+</li>
+<li>
+<p><strong>Tag browsing</strong> — tags set in frontmatter should be filterable, allowing the
+   reader to see all entries tagged <code>opsdev</code> or <code>ramp</code> or <code>beancount</code>, etc.</p>
+</li>
+<li>
+<p><strong>Auto-generated index</strong> — a reverse-chronological <code>index.md</code> listing all
+   entries with dates, titles, and tags. This is the primary navigation surface.</p>
+</li>
+<li>
+<p><strong>Zensical blog integration (future)</strong> — if Zensical adds tag-filtering or
+   chronological blog features, adopt them. Until then, the auto-generated index
+   page is the navigation hub.</p>
+</li>
+</ol>
+<h3 id="how-zensical-handles-this">How Zensical handles this<a class="headerlink" href="#how-zensical-handles-this" title="Permanent link">&para;</a></h3>
+<p>Zensical auto-navigation (the sidebar) picks up every <code>.md</code> file in the docs
+directory unless explicitly excluded. To avoid sidebar clutter from individual
+worklog entries, we need to explore:</p>
+<ul>
+<li>Zensical's <code>nav</code> exclusion mechanism</li>
+<li>Placing worklog entries outside the docs_dir</li>
+<li>Using a plugin or custom template to hide them</li>
+</ul>
+<p>This is tracked as a design investigation item.</p>
+<h2 id="related">Related<a class="headerlink" href="#related" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="../../specs/">specs/README.md</a> FR-1, FR-5 — Entry creation and listing</li>
+<li><a href="../../specs/NFR/">specs/NFR.md</a> NFR-4 — Cross-platform compatibility</li>
+<li><a href="../../../../../public/opsdev.nz/docs/worklog/">public/opsdev.nz/docs/worklog/index.md</a>
+  — Current worklog documentation</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="lucide lucide-circle-arrow-up" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m16 12-4-4-4 4M12 16V8"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      Copyright &copy; 2026 OpsDev.NZ
+
+    </div>
+  
+  
+    Made with
+    <a href="https://zensical.org/" target="_blank" rel="noopener">
+      Zensical
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      
+      <script id="__config" type="application/json">{"annotate":null,"base":"../..","features":["announce.dismiss","content.code.annotate","content.code.copy","content.code.select","content.footnote.tooltips","content.tabs.link","content.tooltips","navigation.footer","navigation.indexes","navigation.instant","navigation.instant.prefetch","navigation.path","navigation.sections","navigation.top","navigation.tracking","search.highlight"],"search":"../../assets/javascripts/workers/search.e2d2d235.min.js","tags":null,"translations":{"clipboard.copied":"Copied to clipboard","clipboard.copy":"Copy to clipboard","search.result.more.one":"1 more on this page","search.result.more.other":"# more on this page","search.result.none":"No matching documents","search.result.one":"1 matching document","search.result.other":"# matching documents","search.result.placeholder":"Type to start searching","search.result.term.missing":"Missing","select.version":"Select version"},"version":null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.5fcf0de6.min.js"></script>
+      
+    
+  </body>
+</html>

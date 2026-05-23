@@ -1,6 +1,6 @@
 # WorkLog OpsDev.NZ
 
-**Status:** v0.0.1 — Planning / Staging
+**Status:** Development — see pyproject.toml for version
 
 Configurable CLI tool for creating and managing dated development worklogs.
 Generates Markdown entries with YAML frontmatter from per-project templates.
@@ -28,36 +28,13 @@ and filenames. The core concept was always the same.
 ## Quick Start
 
 ```bash
-# Install (development)
-uv pip install -e modules/worklog_opsdevnz
-
 # Create today's worklog
-worklog-opsdevnz create
+worklog-opsdevnz
 
-# Create for a specific date with title
-worklog-opsdevnz create -d 2026-04-28 -t "Module Scaffolding"
-
-# List existing entries
-worklog-opsdevnz list
-
-# Scaffold a worklog.toml config
-worklog-opsdevnz init
+# Create yesterday's worklog
+worklog-opsdevnz --previous
 ```
 
-## Configuration
-
-Each project gets a `worklog.toml` at its root:
-
-```toml
-worklog_dir = "docs/worklog"
-structure = "flat"           # "flat", "year", or "year-month"
-filename_pattern = "{date}-{slug}.md"
-author = "OpsDev.nz Collective"
-default_tags = ["worklog", "opsdevnz"]
-
-[[sections]]
-title = "🎯 Focus"
-content = ""
 
 [[sections]]
 title = "✅ Completed"

@@ -171,4 +171,5 @@ the prototype, with no breaking changes to existing config files.
 
 **Document:** NFR.md  
 **Module:** worklog-opsdevnz  
-**Version:** 0.0.1
+**Module:** worklog-opsdevnz  
+**Version:** see pyproject.toml
