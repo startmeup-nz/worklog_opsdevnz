@@ -1,8 +1,8 @@
 # Functional Requirements Specification
 
 **Module:** worklog-opsdevnz  
-**Module Version:** 0.0.1 (from pyproject.toml)  
-**Spec Last Updated:** 2026-04-28 (from git history)  
+**Module Version:** see `pyproject.toml`  
+**Spec Last Updated:** 2026-05-23 (from git history)  
 **Status:** Draft
 
 ---
@@ -34,16 +34,15 @@ Use `specmaint sync-metadata` to sync both fields from their sources.
 
 - **FR-1.1.1**: Tool MUST create a new Markdown file with YAML frontmatter containing
   `title`, `date`, `author`, `tags`, and `draft` fields
-- **FR-1.1.2**: Tool MUST default to today's date when no `-d` / `--date` argument provided
-- **FR-1.1.3**: Tool MUST accept an optional title suffix via `-t` / `--title` argument
+- **FR-1.1.2**: Tool MUST default to today's date when no `-p` / `--previous` flag provided
+- **FR-1.1.3**: Tool MUST use `-p` / `--previous` to open yesterday's worklog
 - **FR-1.1.4**: Tool MUST NOT overwrite existing entries — if a file already exists for the
-  given date/slug, it MUST open the existing file instead
+  given date, it MUST open the existing file instead
 
 ### FR-1.1.A: Frontmatter Format
 
 - **FR-1.1.A.1**: Frontmatter MUST use YAML format delimited by `---` markers
-- **FR-1.1.A.2**: `title` field MUST follow the pattern `"Work Log - {date}"` with optional
-  suffix: `"Work Log - {date} - {suffix}"`
+- **FR-1.1.A.2**: `title` field MUST follow the pattern `"Work Log - {date}"`
 - **FR-1.1.A.3**: `date` field MUST be ISO 8601 format (`YYYY-MM-DD`)
 - **FR-1.1.A.4**: `author` field MUST come from `worklog.toml` config
 - **FR-1.1.A.5**: `tags` field MUST be a YAML list from `default_tags` in config
@@ -75,7 +74,8 @@ The `worklog.toml` file supports the following fields:
 |-------|------|----------|---------|-------------|
 | `worklog_dir` | string | No | `"docs/worklog"` | Base directory for worklog files |
 | `structure` | string | No | `"year"` | Directory structure: `"flat"`, `"year"`, `"year-month"` |
-| `filename_pattern` | string | No | `"{date}-{slug}.md"` | Filename template |
+| `filename_pattern` | string | No | `"{day}-{month}-{year}-{suffix}.md"` | Filename template. Default: `23-05-2026-worklog.md` |
+| `filename_suffix` | string | No | `"worklog"` | Configurable suffix appended to the filename |
 | `author` | string | No | `$USER` or `"unknown"` | Default author name |
 | `default_tags` | list | No | `["internal", "log"]` | Default YAML tags |
 | `sections` | list | No | (see defaults) | Ordered section headers |
@@ -93,17 +93,19 @@ The `worklog.toml` file supports the following fields:
 ### FR-3.1: Flat Mode (`structure = "flat"`)
 
 - **FR-3.1.1**: All worklog files placed directly in `worklog_dir`
-- **FR-3.1.2**: Filename: `{date}-{slug}.md`
+- **FR-3.1.2**: Filename: `YYYY-MM-DD-{suffix}.md` (year first to sort correctly)
 
-### FR-3.2: Year Mode (`structure = "year"`)
+### FR-3.2: Year Mode (`structure = "year"`) — default
 
 - **FR-3.2.1**: Files placed in `worklog_dir/YYYY/`
-- **FR-3.2.2**: Year derived from the entry date
+- **FR-3.2.2**: Filename: `DD-MM-YYYY-{suffix}.md`
+- **FR-3.2.3**: Example: `docs/worklog/2026/23-05-2026-worklog.md`
 
 ### FR-3.3: Year-Month Mode (`structure = "year-month"`)
 
 - **FR-3.3.1**: Files placed in `worklog_dir/YYYY/MM/`
-- **FR-3.3.2**: Year and month derived from the entry date
+- **FR-3.3.2**: Filename: `DD-MM-YYYY-{suffix}.md`
+- **FR-3.3.3**: Example: `docs/worklog/2026/05/23-05-2026-worklog.md`
 
 ---
 
@@ -145,23 +147,17 @@ The `worklog.toml` file supports the following fields:
 
 ## FR-6: CLI Interface
 
-### FR-6.1: Commands
+### FR-6.1: Command
 
-| Command | Description |
-|---------|-------------|
-| `worklog-opsdevnz create` | Create or open a worklog entry |
-| `worklog-opsdevnz list` | List all worklog entries |
-| `worklog-opsdevnz init` | Create a `worklog.toml` config file |
+`worklog-opsdevnz` — create or open today's worklog (default, no args required).
+`list` and `init` subcommands are planned for future versions.
 
 ### FR-6.2: Global Options
 
 | Option | Description |
 |--------|-------------|
-| `-d`, `--date` | Date in `YYYY-MM-DD` format (default: today) |
-| `-t`, `--title` | Optional title suffix for filename and frontmatter |
+| `-p`, `--previous` | Open yesterday's worklog instead of today's |
 | `-e`, `--editor` | Override editor command for this run |
-| `--list` | List all worklogs (alias for `list` command) |
-| `--init` | Create config (alias for `init` command) |
 
 ### FR-6.3: Error Handling
 
@@ -198,6 +194,16 @@ The `worklog.toml` file supports the following fields:
 - [ ] Empty `src/worklog_opsdevnz/` package scaffolded
 - [ ] Empty `tests/` directory scaffolded
 
+### 0.0.2 MVP Complete When:
+
+- [ ] `worklog-opsdevnz` (no args) creates today's worklog with YAML frontmatter and config-driven sections
+- [ ] `-p` / `--previous` opens yesterday's worklog
+- [ ] `-e` / `--editor` overrides the configured editor
+- [ ] Config discovery walks up the tree, falls back to defaults
+- [ ] Three structure modes work: flat, year, year-month
+- [ ] Filename follows `DD-MM-YYYY-{suffix}.md` (year/month modes) or `YYYY-MM-DD-{suffix}.md` (flat)
+- [ ] Tests cover config loading, path resolution, frontmatter generation
+
 ### 0.1.0 MVP Complete When:
 
 - [ ] `create` command works with all three structure modes
@@ -212,18 +218,25 @@ The `worklog.toml` file supports the following fields:
 
 ## Implementation Status
 
+### v0.0.1 (staging) — Complete
+
+- [x] Module scaffolded with template
+- [x] pyproject.toml with metadata and dependencies
+- [x] Specs, stories, and design docs in place
+- [x] GitHub Actions CI and Dependabot configured
+
+### v0.0.2 (current)
+
 | FR | Requirement | Status | Evidence |
 |----|-------------|--------|----------|
-| FR-1.1 | Basic creation | 📋 Planned | Prototype exists in opsdev.nz/scripts/worklog.py |
-| FR-2.1 | Config discovery | 📋 Planned | Prototype exists |
-| FR-3.1-3.3 | Structure modes | 📋 Planned | Prototype supports flat, year, year-month |
-| FR-4.1-4.2 | Editor integration | 📋 Planned | Prototype exists |
-| FR-5.1 | List command | 📋 Planned | Prototype exists (needs date sorting) |
-| FR-6.1-6.3 | CLI interface | 📋 Planned | Prototype uses argparse, will migrate to Click |
-| FR-7.1-7.2 | Template support | 📋 Planned | 0.1.0 feature |
+| FR-1.1 | Basic creation with frontmatter + sections | 📋 Planned | Porting from prototype |
+| FR-2.1 | Config discovery (TOML/YAML, walk-up, defaults) | 📋 Planned | Porting from prototype |
+| FR-3.1-3.3 | Structure modes (flat/year/year-month) | 📋 Planned | Porting from prototype |
+| FR-4.1-4.2 | Editor integration | 📋 Planned | Porting from prototype |
+| FR-6.1-6.3 | Click CLI with `-p` and `-e` flags | 📋 Planned | New implementation |
 
 ---
 
 **Document:** specs/README.md  
 **Module:** worklog-opsdevnz  
-**Version:** 0.0.1
+**Version:** see pyproject.toml
