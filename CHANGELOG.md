@@ -9,3 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 - Initial module scaffold from template-opsdevnz
+- Worklog specs, stories, and design docs ported from incubation
+- pyproject.toml with Click, PyYAML, Rich dependencies
+- GitHub Actions CI (test on push/PR) and PyPI publish (on tag)
+- Dependabot weekly pip updates
