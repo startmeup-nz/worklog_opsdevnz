@@ -1,0 +1,60 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "YOUR-MODULE-opsdevnz"
+version = "0.0.1"
+description = "Description of what this module does"
+readme = "README.md"
+license = {text = "Apache-2.0"}
+authors = [
+    {name = "OpsDev.nz Collective", email = "john@opsdev.nz"}
+]
+requires-python = ">=3.12"
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+]
+keywords = ["opsdev", "template"]
+dependencies = [
+    "click>=8.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0",
+    "pytest-cov>=4.0",
+    "ruff>=0.4",
+    "mypy>=1.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/startmeup-nz/YOUR-MODULE-opsdevnz"
+Repository = "https://github.com/startmeup-nz/YOUR-MODULE-opsdevnz"
+Issues = "https://github.com/startmeup-nz/YOUR-MODULE-opsdevnz/issues"
+
+[project.scripts]
+YOUR-MODULE = "YOUR_MODULE_opsdevnz.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+addopts = "-v --cov=src/YOUR_MODULE_opsdevnz --cov-report=term-missing"
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.mypy]
+python_version = "3.12"
+warn_return_any = true
+disallow_untyped_defs = true
