@@ -1,0 +1,114 @@
+# ============================================================================
+# Zensical Configuration for worklog-opsdevnz
+#
+# This config is tailored for worklog-opsdevnz module documentation.
+# Generated: 2026-04-28
+# ============================================================================
+
+[project]
+
+# Site name shown in header and browser title
+site_name = "worklog-opsdevnz"
+
+# Meaningful description for search engines
+site_description = "Configurable CLI tool for creating and managing dated development worklogs"
+
+# Site author
+site_author = "OpsDev.NZ"
+
+# Canonical URL (when deployed)
+site_url = ""
+
+# Copyright notice in footer
+copyright = """
+Copyright &copy; 2026 OpsDev.NZ
+"""
+
+# Navigation structure
+nav = [
+  { "Getting Started" = "index.md" },
+  { "Specification" = "specs/README.md" },
+  { "Non-Functional Requirements" = "specs/NFR.md" },
+  { "User Stories" = "stories/README.md" },
+  { "Design Decisions" = "design/README.md" },
+]
+
+# Language
+language = "en"
+
+# ----------------------------------------------------------------------------
+# Theme Configuration
+# ----------------------------------------------------------------------------
+[project.theme]
+
+# Use default Zensical variant
+#variant = "classic"
+
+# Language
+language = "en"
+
+# ----------------------------------------------------------------------------
+# Feature Toggles
+# ----------------------------------------------------------------------------
+features = [
+    # Announcement bar with dismiss
+    "announce.dismiss",
+
+    # Code annotations
+    "content.code.annotate",
+
+    # Copy button in code blocks
+    "content.code.copy",
+
+    # Line selection in code blocks
+    "content.code.select",
+
+    # Footnotes as tooltips
+    "content.footnote.tooltips",
+
+    # Linked content tabs
+    "content.tabs.link",
+
+    # Tooltips
+    "content.tooltips",
+
+    # Navigation footer (prev/next)
+    "navigation.footer",
+
+    # Section index pages
+    "navigation.indexes",
+
+    # Instant navigation
+    "navigation.instant",
+
+    # Instant prefetching
+    "navigation.instant.prefetch",
+
+    # Breadcrumb navigation
+    "navigation.path",
+
+    # Navigation sections
+    "navigation.sections",
+
+    # Back-to-top button
+    "navigation.top",
+
+    # Anchor tracking
+    "navigation.tracking",
+
+    # Search highlighting
+    "search.highlight",
+]
+
+# ----------------------------------------------------------------------------
+# Color Palette
+# ----------------------------------------------------------------------------
+[[project.theme.palette]]
+scheme = "default"
+toggle.icon = "lucide/sun"
+toggle.name = "Switch to dark mode"
+
+[[project.theme.palette]]
+scheme = "slate"
+toggle.icon = "lucide/moon"
+toggle.name = "Switch to light mode"

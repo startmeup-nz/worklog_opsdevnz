@@ -1,11 +1,13 @@
 """Tests for CLI entry point."""
 
-from click.testing import CliRunner
-from template_opsdevnz.cli import main
+from worklog_opsdevnz.cli import main
 
 
-def test_hello():
-    runner = CliRunner()
-    result = runner.invoke(main, ["hello"])
-    assert result.exit_code == 0
-    assert "Hello" in result.output
+def test_main_runs():
+    result = main()
+    assert result is None  # main() returns None, prints to stdout
+
+
+def test_version(capsys):
+    from worklog_opsdevnz import __version__
+    assert __version__ == "0.0.1"

@@ -3,15 +3,14 @@ requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "YOUR-MODULE-opsdevnz"
+name = "worklog-opsdevnz"
 version = "0.0.1"
-description = "Description of what this module does"
+description = "Configurable worklog management CLI for dated development logs"
 readme = "README.md"
 license = {text = "Apache-2.0"}
 authors = [
     {name = "OpsDev.nz Collective", email = "john@opsdev.nz"}
 ]
-requires-python = ">=3.12"
 classifiers = [
     "Development Status :: 3 - Alpha",
     "Intended Audience :: Developers",
@@ -20,38 +19,50 @@ classifiers = [
     "Programming Language :: Python :: 3.12",
     "Programming Language :: Python :: 3.13",
     "Programming Language :: Python :: 3.14",
+    "Topic :: Software Development :: Documentation",
+    "Topic :: Text Processing :: Markup :: Markdown"
 ]
-keywords = ["opsdev", "template"]
+keywords = ["worklog", "documentation", "daily-log", "cli", "markdown"]
+requires-python = ">=3.12"
+
 dependencies = [
     "click>=8.0",
+    "pyyaml>=6.0",
+    "rich>=13.0.0",
 ]
 
 [project.optional-dependencies]
 dev = [
     "pytest>=7.0",
     "pytest-cov>=4.0",
+    "pytest-mock>=3.10",
     "ruff>=0.4",
     "mypy>=1.0",
 ]
 
 [project.urls]
-Homepage = "https://github.com/startmeup-nz/YOUR-MODULE-opsdevnz"
-Repository = "https://github.com/startmeup-nz/YOUR-MODULE-opsdevnz"
-Issues = "https://github.com/startmeup-nz/YOUR-MODULE-opsdevnz/issues"
+Homepage = "https://github.com/startmeup-nz/worklog-opsdevnz"
+Documentation = "https://opsdev.nz/modules/worklog-opsdevnz"
+Repository = "https://github.com/startmeup-nz/worklog-opsdevnz.git"
+"Bug Tracker" = "https://github.com/startmeup-nz/worklog-opsdevnz/issues"
 
 [project.scripts]
-YOUR-MODULE = "YOUR_MODULE_opsdevnz.cli:main"
+worklog-opsdevnz = "worklog_opsdevnz.cli:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
+exclude = ["tests*", ".venv*"]
+
+[tool.setuptools.package-data]
+worklog_opsdevnz = ["templates/**/*"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 python_files = ["test_*.py"]
-addopts = "-v --cov=src/YOUR_MODULE_opsdevnz --cov-report=term-missing"
+addopts = "-v --cov=src/worklog_opsdevnz --cov-report=term-missing"
 
 [tool.ruff]
-line-length = 100
+line-length = 88
 target-version = "py312"
 
 [tool.mypy]
