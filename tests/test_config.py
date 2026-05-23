@@ -1,9 +1,8 @@
 """Tests for config discovery and loading."""
 
-import tempfile
 from pathlib import Path
 
-from worklog_opsdevnz.config import DEFAULT_CONFIG, find_config, get_config, merge_config
+from worklog_opsdevnz.config import find_config, get_config, merge_config
 
 
 def test_find_config_toml(tmp_path: Path):
