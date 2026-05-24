@@ -7,12 +7,14 @@ from pathlib import Path
 
 import click
 
+from worklog_opsdevnz import __version__
 from worklog_opsdevnz.config import get_config
 from worklog_opsdevnz.paths import resolve_path
 from worklog_opsdevnz.template import generate_content
 
 
 @click.command()
+@click.version_option(version=__version__, prog_name="worklog-opsdevnz")
 @click.option(
     "-e",
     "--editor",

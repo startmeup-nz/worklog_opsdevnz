@@ -7,7 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [0.0.4] — 2026-05-25
+## [0.0.5] — 2026-05-25
+
+### Added
+- `--version` flag: prints installed version via `importlib.metadata` (#5)
+- Spec FR-5.4: version reporting requirements documented
+- Test for `--version` output (version-agnostic)
 
 ### Fixed
 - `worklog_dir` now resolves relative to config file location, not CWD — running from any
