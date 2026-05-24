@@ -64,6 +64,8 @@ Use `specmaint sync-metadata` to sync both fields from their sources.
   starting from the current working directory and walking up to the filesystem root
 - **FR-2.1.2**: Tool MUST use the first config file found
 - **FR-2.1.3**: If no config file is found, tool MUST use built-in defaults
+- **FR-2.1.4**: Relative `worklog_dir` paths MUST be resolved against the config file's
+  parent directory, not the current working directory
 
 ### FR-2.2: Configuration Schema
 
@@ -71,7 +73,7 @@ The `worklog.toml` file supports the following fields:
 
 | Field | Type | Required | Default | Description |
 |-------|------|----------|---------|-------------|
-| `worklog_dir` | string | No | `"docs/worklog"` | Base directory for worklog files |
+| `worklog_dir` | string | No | `"docs/worklog"` | Base directory for worklog files (relative paths resolved against config file's parent directory) |
 | `structure` | string | No | `"year"` | Directory structure: `"flat"`, `"year"`, `"year-month"` |
 | `suffix` | string | No | `"worklog"` | Filename suffix (e.g. `23-05-2026-worklog.md`) |
 | `author` | string | No | `$USER` or `"unknown"` | Default author name |
