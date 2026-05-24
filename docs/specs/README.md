@@ -139,11 +139,20 @@ The `worklog.toml` file supports the following fields:
 | Option | Description |
 |--------|-------------|
 | `-e`, `--editor` | Override editor command for this run |
+| `--version` | Print the installed version and exit |
 
 ### FR-5.3: Error Handling
 
 - **FR-5.3.1**: File write failures MUST produce a clear error message and non-zero exit
 - **FR-5.3.2**: All errors MUST write to stderr
+
+### FR-5.4: Version Reporting
+
+- **FR-5.4.1**: `--version` MUST print the installed version to stdout and exit with code 0
+- **FR-5.4.2**: Version MUST be read from installed package metadata via
+  `importlib.metadata.version()` to avoid duplicating the version string across files
+- **FR-5.4.3**: If package metadata is unavailable (e.g. local editable install), the tool
+  MUST fall back to a `"0.0.0+local"` placeholder
 
 ---
 
@@ -200,7 +209,7 @@ The `worklog.toml` file supports the following fields:
 - [x] Specs, stories, and design docs in place
 - [x] GitHub Actions CI and Dependabot configured
 
-### v0.0.2 (current)
+### v0.0.2 — Complete
 
 | FR | Requirement | Status | Evidence |
 |----|-------------|--------|----------|
@@ -209,6 +218,13 @@ The `worklog.toml` file supports the following fields:
 | FR-3.1-3.3 | Structure modes (flat/year/year-month) | ✅ Implemented | `paths.py`, 4 tests |
 | FR-4.1-4.2 | Editor integration | ✅ Implemented | `cli.py:_open_editor` |
 | FR-5.1-5.3 | Click CLI with `-e` flag | ✅ Implemented | `cli.py:main`, 4 tests |
+
+### v0.0.5 (current)
+
+| FR | Requirement | Status | Evidence |
+|----|-------------|--------|----------|
+| FR-2.1.4 | Config-relative `worklog_dir` resolution | ✅ Implemented | `config.py:get_config` |
+| FR-5.4 | `--version` flag with `importlib.metadata` | ✅ Implemented | `cli.py:main`, `__init__.py` |
 
 ---
 

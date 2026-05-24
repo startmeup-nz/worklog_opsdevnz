@@ -36,3 +36,14 @@ def test_main_help():
     result = runner.invoke(main, ["--help"])
     assert result.exit_code == 0
     assert "--editor" in result.output
+
+
+def test_main_version():
+    """--version prints the installed version."""
+    runner = CliRunner()
+    result = runner.invoke(main, ["--version"])
+    assert result.exit_code == 0
+    assert "worklog-opsdevnz, version" in result.output
+    # Extract and verify it's a non-empty version string
+    version_str = result.output.strip().split(", version ")[-1]
+    assert version_str

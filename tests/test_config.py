@@ -5,11 +5,12 @@ from pathlib import Path
 from worklog_opsdevnz.config import find_config, get_config, merge_config
 
 
-def test_find_config_toml(tmp_path: Path):
-    (tmp_path / "worklog.toml").write_text('author = "test-user"')
-    found = find_config()
-    assert found is None  # not in current dir
+def test_find_config_toml(tmp_path: Path, tmp_path_factory: Path):
+    """Search finds config in start dir; returns None from a path with no config above it."""
+    empty = tmp_path_factory.mktemp("empty")
+    assert find_config(start=empty) is None
 
+    (tmp_path / "worklog.toml").write_text('author = "test-user"')
     found = find_config(start=tmp_path)
     assert found is not None
     assert found.name == "worklog.toml"
