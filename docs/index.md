@@ -2,17 +2,16 @@
 
 Configurable CLI tool for creating and managing dated development worklogs.
 
-**Version:** see pyproject.toml  
-**Status:** Development
-**License:** Apache 2.0  
-**Python:** 3.14+
+- **Status:** Development
+- **License:** Apache 2.0
+- **Python:** 3.14+
 
 ## Overview
 
 Across multiple projects, teams kept reinventing the same pattern: a script that
 creates a dated Markdown file from a template, with YAML frontmatter for date,
 author, tags, and draft status. Each implementation had slightly different
-directory structures, section headers, and filenames — but the core concept was
+directory structures, section headers, and filenames, but the core concept was
 always the same.
 
 `worklog-opsdevnz` formalises this pattern into a single reusable module.
@@ -72,6 +71,7 @@ The tool supports three directory layouts, configured per project:
 
 - **[Specification](specs/README.md)** — Functional requirements
 - **[Non-Functional Requirements](specs/NFR.md)** — Code quality and design guidelines
+- **[Release Process](release-process.md)** — Trusted Publishing (OIDC) and CI/CD pipeline
 - **[User Stories](stories/README.md)** — Persona-driven acceptance criteria
 - **[Design Decisions](design/README.md)** — Architecture choices and rationale
 
