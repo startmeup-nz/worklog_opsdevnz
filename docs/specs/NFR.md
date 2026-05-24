@@ -153,19 +153,72 @@ the prototype, with no breaking changes to existing config files.
 
 ---
 
+## NFR-8: Release Process
+
+### NFR-8.1: Automated CI/CD Pipeline
+
+**Requirement:** The module MUST have an automated CI/CD pipeline for release
+publishing. The release flow must be triggered by a push of a version tag
+(e.g. `v0.1.0`) to the primary branch, and must execute in an isolated
+runner environment with access to only the PyPI credentials it needs.
+
+**Rationale:** Manual releases are error-prone and inconsistent. An
+automated pipeline ensures every release follows the same reproducible
+process regardless of the CI platform.
+
+### NFR-8.2: Test PyPI Gate *(Optional)*
+
+**Requirement:** The release workflow MAY publish to Test PyPI as a quality
+gate before the real PyPI publish. When used, the Test PyPI package must
+be installable and functional before the real publish proceeds.
+
+**Rationale:** A broken release on real PyPI is hard to fix and confusing
+to users. Test PyPI provides a safe environment to validate the package
+end-to-end before it reaches the public index. Mature modules with
+established pipelines may skip this step.
+
+### NFR-8.3: Single Source of Truth for Version
+
+**Requirement:** The version number MUST be sourced from a single place
+(`pyproject.toml`), read via `importlib.metadata.version()`. No version
+string duplication across files.
+
+**Rationale:** Duplicated version strings drift over time and create
+confusion about which value is authoritative.
+
+### NFR-8.4: Dry-Run Safety
+
+**Requirement:** The release workflow MUST support a dry-run mode (e.g.
+publish to Test PyPI only, without tagging or real PyPI) for pipeline
+validation before cutting a real release.
+
+### NFR-8.5: Smoketest Verification
+
+**Requirement:** After publishing to Test PyPI, the workflow MUST install
+the published wheel from Test PyPI in a clean virtual environment and run
+`worklog-opsdevnz --version` to confirm the version string matches the
+release tag and the package is functional.
+
+---
+
 ## Compliance Checklist
 
 | Requirement | Status | Notes |
 |-------------|--------|-------|
-| No hardcoded project assumptions | 📋 Planned | Will be enforced in implementation |
-| Type hints on public functions | 📋 Planned | mypy configured |
-| Click CLI framework | 📋 Planned | Dependency declared |
-| Relative path resolution | 📋 Planned | Will use config dir as anchor |
-| Python 3.14+ | 📋 Planned | requires-python set |
-| Cross-platform | 📋 Planned | pathlib for all paths |
-| TOML config primary | 📋 Planned | tomllib (stdlib 3.14) |
-| Unit tests | 📋 Planned | pytest configured |
-| Backward compatible with prototype | 📋 Planned | Same config schema |
+| No hardcoded project assumptions | ✅ Complete | Config-driven sections, tags, author, structure |
+| Type hints on public functions | ✅ Complete | mypy configured, all public functions typed |
+| Click CLI framework | ✅ Complete | Click 8.x, `@click.command`, `@click.option`, `@click.version_option` |
+| Relative path resolution | ✅ Complete | Resolved against config file directory (FR-2.1.4) |
+| Python 3.14+ | ✅ Complete | `requires-python = ">=3.12"` |
+| Cross-platform | ✅ Complete | pathlib for all paths |
+| TOML config primary | ✅ Complete | tomllib (stdlib 3.14) |
+| Unit tests | ✅ Complete | 18 tests, 88% coverage |
+| Backward compatible with prototype | ✅ Complete | Same config schema, same worklog format |
+| Automated CI/CD pipeline | 📋 Planned | Tag-triggered publish to PyPI |
+| Test PyPI gate | 📋 Planned (optional) | Validate on Test PyPI before real publish |
+| Single source of truth for version | ✅ Complete | `importlib.metadata.version()` in `__init__.py` |
+| Dry-run safety | 📋 Planned | Test PyPI-only publish for validation |
+| Smoketest verification | 📋 Planned | Install from Test PyPI, run `--version` |
 
 ---
 
