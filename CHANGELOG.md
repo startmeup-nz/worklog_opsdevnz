@@ -7,10 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.3] — 2026-05-24
+
 ### Changed
 - Narrowed MVP scope: defer `list`, `init`, `create` subcommands to 0.1.0+
+- Removed `-p` / `--previous` flag — current scope is create/open today's worklog only
 - Removed unused `rich` dependency
 - Cleaned up documentation to match actual implemented behaviour
+- Spec cleaned up: removed stale requirements, renumbered FR sections, marked 0.1.0+ items
+
+### Fixed
+- README.md broken code block and stale `--list` reference
+- docs/index.md references to non-existent commands (`create`, `list`, `init`, `-d`, `-t`)
+- Spec implementation status updated to reflect reality
+
+### Added
+- Agents.md — minimal module-specific guidance, self-contained
 
 ## [0.0.2] — 2026-05-24
 
