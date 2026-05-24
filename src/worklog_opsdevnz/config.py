@@ -63,5 +63,9 @@ def get_config() -> dict[str, Any]:
     """Discover and load config, falling back to defaults."""
     config_path = find_config()
     if config_path:
-        return merge_config(load_config(config_path), DEFAULT_CONFIG)
+        merged = merge_config(load_config(config_path), DEFAULT_CONFIG)
+        worklog_dir = merged["worklog_dir"]
+        if not Path(worklog_dir).is_absolute():
+            merged["worklog_dir"] = str(config_path.parent / worklog_dir)
+        return merged
     return dict(DEFAULT_CONFIG)

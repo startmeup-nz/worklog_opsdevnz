@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.0.4] — 2026-05-25
+
+### Fixed
+- `worklog_dir` now resolves relative to config file location, not CWD — running from any
+  subdirectory creates files in the correct project-relative path (#4)
+- Config discovery always anchored relative paths to the current working directory; now
+  relative `worklog_dir` values are resolved against the config file's parent directory
+
+### Added
+- Spec FR-2.1.4: documents `worklog_dir` resolution rule
+- Regression test: `test_get_config_worklog_dir_resolved_relative_to_config`
+
 ## [0.0.3] — 2026-05-24
 
 ### Changed

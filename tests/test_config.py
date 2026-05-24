@@ -53,3 +53,16 @@ def test_get_config_from_file(tmp_path: Path, monkeypatch):
     assert config["author"] == "Test Author"
     assert config["structure"] == "flat"
     assert config["suffix"] == "worklog"  # default preserved
+    # worklog_dir defaults to "docs/worklog" and should be resolved to absolute
+    assert config["worklog_dir"] == str(tmp_path / "docs/worklog")
+
+
+def test_get_config_worklog_dir_resolved_relative_to_config(tmp_path: Path, monkeypatch):
+    """worklog_dir is resolved against config file directory, not CWD."""
+    (tmp_path / "worklog.toml").write_text('worklog_dir = "my/logs"')
+    sub = tmp_path / "sub" / "deep"
+    sub.mkdir(parents=True)
+    monkeypatch.chdir(sub)
+
+    config = get_config()
+    assert config["worklog_dir"] == str(tmp_path / "my/logs")
