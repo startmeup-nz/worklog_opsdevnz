@@ -75,24 +75,6 @@ The tool supports three directory layouts, configured per project:
 - **[User Stories](stories/README.md)** — Persona-driven acceptance criteria
 - **[Design Decisions](design/README.md)** — Architecture choices and rationale
 
-## Scope
-
-**In scope for 0.0.2:**
-- Default command creates/opens today's worklog
-- `--previous` / `-p` for yesterday's entry
-- `--editor` / `-e` to override editor
-- Per-project configuration via `worklog.toml`
-- Three directory structure modes
-- Editor integration (`$VISUAL` / `$EDITOR`)
-
-**Out of scope (planned for 0.1.0+):**
-- `list`, `init`, `create` subcommands
-- Zensical blog integration — see [design decision](design/worklog-as-blog.md)
-- RSS feed generation
-- Auto-generated index pages
-- Time tracking / timesheet aggregation
-- Template support (custom + retro templates)
-
 ## Development
 
 ```bash
