@@ -2,7 +2,7 @@
 
 import shutil
 import subprocess
-from datetime import date, timedelta
+from datetime import date
 from pathlib import Path
 
 import click
@@ -14,22 +14,14 @@ from worklog_opsdevnz.template import generate_content
 
 @click.command()
 @click.option(
-    "-p",
-    "--previous",
-    is_flag=True,
-    help="Open yesterday's worklog instead of today's.",
-)
-@click.option(
     "-e",
     "--editor",
     default=None,
     help="Override the editor command (default: $VISUAL or $EDITOR).",
 )
-def main(previous: bool, editor: str | None) -> None:
+def main(editor: str | None) -> None:
     """Create or open today's worklog entry."""
     entry_date = date.today()
-    if previous:
-        entry_date = date.today() - timedelta(days=1)
 
     config = get_config()
     target = resolve_path(config, entry_date)

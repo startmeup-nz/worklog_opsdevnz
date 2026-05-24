@@ -34,9 +34,8 @@ Use `specmaint sync-metadata` to sync both fields from their sources.
 
 - **FR-1.1.1**: Tool MUST create a new Markdown file with YAML frontmatter containing
   `title`, `date`, `author`, `tags`, and `draft` fields
-- **FR-1.1.2**: Tool MUST default to today's date when no `-p` / `--previous` flag provided
-- **FR-1.1.3**: Tool MUST use `-p` / `--previous` to open yesterday's worklog
-- **FR-1.1.4**: Tool MUST NOT overwrite existing entries — if a file already exists for the
+- **FR-1.1.2**: Tool MUST target today's date by default
+- **FR-1.1.3**: Tool MUST NOT overwrite existing entries — if a file already exists for the
   given date, it MUST open the existing file instead
 
 ### FR-1.1.A: Frontmatter Format
@@ -74,13 +73,12 @@ The `worklog.toml` file supports the following fields:
 |-------|------|----------|---------|-------------|
 | `worklog_dir` | string | No | `"docs/worklog"` | Base directory for worklog files |
 | `structure` | string | No | `"year"` | Directory structure: `"flat"`, `"year"`, `"year-month"` |
-| `filename_pattern` | string | No | `"{day}-{month}-{year}-{suffix}.md"` | Filename template. Default: `23-05-2026-worklog.md` |
-| `filename_suffix` | string | No | `"worklog"` | Configurable suffix appended to the filename |
+| `suffix` | string | No | `"worklog"` | Filename suffix (e.g. `23-05-2026-worklog.md`) |
 | `author` | string | No | `$USER` or `"unknown"` | Default author name |
 | `default_tags` | list | No | `["internal", "log"]` | Default YAML tags |
 | `sections` | list | No | (see defaults) | Ordered section headers |
 
-### FR-2.3: Config Initialisation
+### FR-2.3: Config Initialisation *(0.1.0+)*
 
 - **FR-2.3.1**: `worklog-opsdevnz init` MUST create a `worklog.toml` in the current directory
 - **FR-2.3.2**: Tool MUST NOT overwrite an existing config file
@@ -128,57 +126,37 @@ The `worklog.toml` file supports the following fields:
 
 ---
 
-## FR-5: Entry Listing
+## FR-5: CLI Interface
 
-### FR-5.1: List Command
-
-- **FR-5.1.1**: `worklog-opsdevnz list` MUST find all `.md` files under `worklog_dir`
-- **FR-5.1.2**: Tool MUST exclude `index.md`, `template.md`, and `retro-template.md`
-  from listing
-- **FR-5.1.3**: Entries MUST be sorted by date (newest first)
-- **FR-5.1.4**: Output MUST show the relative path from `worklog_dir`
-
-### FR-5.2: List Output (0.1.0+)
-
-- **FR-5.2.1**: Tool SHOULD parse frontmatter to display title, date, and tags
-- **FR-5.2.2**: Output SHOULD use Rich for formatted table display
-
----
-
-## FR-6: CLI Interface
-
-### FR-6.1: Command
+### FR-5.1: Command
 
 `worklog-opsdevnz` — create or open today's worklog (default, no args required).
-`list` and `init` subcommands are planned for future versions.
 
-### FR-6.2: Global Options
+### FR-5.2: Global Options
 
 | Option | Description |
 |--------|-------------|
-| `-p`, `--previous` | Open yesterday's worklog instead of today's |
 | `-e`, `--editor` | Override editor command for this run |
 
-### FR-6.3: Error Handling
+### FR-5.3: Error Handling
 
-- **FR-6.3.1**: Invalid date format MUST produce a clear error message and non-zero exit
-- **FR-6.3.2**: Missing `worklog_dir` MUST produce a clear error message
-- **FR-6.3.3**: All errors MUST write to stderr
+- **FR-5.3.1**: File write failures MUST produce a clear error message and non-zero exit
+- **FR-5.3.2**: All errors MUST write to stderr
 
 ---
 
-## FR-7: Template Support (0.1.0)
+## FR-6: Template Support *(0.1.0+)*
 
-### FR-7.1: Custom Templates
+### FR-6.1: Custom Templates
 
-- **FR-7.1.1**: Tool MUST support a `template` field in config pointing to a Markdown file
-- **FR-7.1.2**: Template files MUST support `{{DATE}}` and `{{TITLE}}` placeholders
-- **FR-7.1.3**: If no template specified, tool MUST use the built-in default template
+- **FR-6.1.1**: Tool MUST support a `template` field in config pointing to a Markdown file
+- **FR-6.1.2**: Template files MUST support `{{DATE}}` and `{{TITLE}}` placeholders
+- **FR-6.1.3**: If no template specified, tool MUST use the built-in default template
 
-### FR-7.2: Retro Templates
+### FR-6.2: Retro Templates
 
-- **FR-7.2.1**: Tool MUST support a separate `retro_template` field in config
-- **FR-7.2.2**: `worklog-opsdevnz create --retro` MUST use the retro template
+- **FR-6.2.1**: Tool MUST support a separate `retro_template` field in config
+- **FR-6.2.2**: `worklog-opsdevnz create --retro` MUST use the retro template
 
 ---
 
@@ -197,7 +175,6 @@ The `worklog.toml` file supports the following fields:
 ### 0.0.2 MVP Complete When:
 
 - [ ] `worklog-opsdevnz` (no args) creates today's worklog with YAML frontmatter and config-driven sections
-- [ ] `-p` / `--previous` opens yesterday's worklog
 - [ ] `-e` / `--editor` overrides the configured editor
 - [ ] Config discovery walks up the tree, falls back to defaults
 - [ ] Three structure modes work: flat, year, year-month
@@ -206,12 +183,8 @@ The `worklog.toml` file supports the following fields:
 
 ### 0.1.0 MVP Complete When:
 
-- [ ] `create` command works with all three structure modes
-- [ ] `list` command sorts by date and shows frontmatter metadata
 - [ ] `init` command generates valid `worklog.toml`
-- [ ] Editor integration works with `$VISUAL` / `$EDITOR`
 - [ ] Template support (custom + retro) implemented
-- [ ] Tests cover config loading, path resolution, frontmatter generation
 - [ ] Published to PyPI as `worklog-opsdevnz`
 
 ---
@@ -229,11 +202,11 @@ The `worklog.toml` file supports the following fields:
 
 | FR | Requirement | Status | Evidence |
 |----|-------------|--------|----------|
-| FR-1.1 | Basic creation with frontmatter + sections | 📋 Planned | Porting from prototype |
-| FR-2.1 | Config discovery (TOML/YAML, walk-up, defaults) | 📋 Planned | Porting from prototype |
-| FR-3.1-3.3 | Structure modes (flat/year/year-month) | 📋 Planned | Porting from prototype |
-| FR-4.1-4.2 | Editor integration | 📋 Planned | Porting from prototype |
-| FR-6.1-6.3 | Click CLI with `-p` and `-e` flags | 📋 Planned | New implementation |
+| FR-1.1 | Basic creation with frontmatter + sections | ✅ Implemented | `template.py`, `cli.py` |
+| FR-2.1 | Config discovery (TOML/YAML, walk-up, defaults) | ✅ Implemented | `config.py`, 6 tests |
+| FR-3.1-3.3 | Structure modes (flat/year/year-month) | ✅ Implemented | `paths.py`, 4 tests |
+| FR-4.1-4.2 | Editor integration | ✅ Implemented | `cli.py:_open_editor` |
+| FR-5.1-5.3 | Click CLI with `-e` flag | ✅ Implemented | `cli.py:main`, 4 tests |
 
 ---
 
