@@ -5,11 +5,36 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+
+### Changed
+- Narrowed MVP scope: defer `list`, `init`, `create` subcommands to 0.1.0+
+- Removed unused `rich` dependency
+- Cleaned up documentation to match actual implemented behaviour
+
+## [0.0.2] — 2026-05-24
+
+### Added
+- Click CLI: bare command creates today's worklog, `-p` for yesterday, `-e` for editor
+- Config discovery: walks up from cwd for `worklog.toml`/`worklog.yaml`, falls back to defaults
+- Path resolution: three structure modes (flat, year, year-month)
+- Frontmatter + body generation from config-driven sections
+- Editor resolution: CLI override → `$VISUAL` → `$EDITOR`
+- 17 tests covering config, paths, template, CLI (89% coverage)
+
+### Changed
+- Migrated from prototype script to Click-based module
+- Removed hardcoded version strings from docs — DRY via pyproject.toml
+
+### Fixed
+- Linting issues (unused imports, missing `Path` import)
+- Generated `site/` directory accidentally tracked — removed and gitignored
+
 ## [0.0.1] — Unreleased
 
 ### Added
 - Initial module scaffold from template-opsdevnz
 - Worklog specs, stories, and design docs ported from incubation
-- pyproject.toml with Click, PyYAML, Rich dependencies
+- pyproject.toml with Click, PyYAML dependencies
 - GitHub Actions CI (test on push/PR) and PyPI publish (on tag)
 - Dependabot weekly pip updates

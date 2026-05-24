@@ -7,11 +7,11 @@ Generates Markdown entries with YAML frontmatter from per-project templates.
 
 ## Problem
 
-Across multiple projects (outcome-engineering, opsdev.nz, floydwilde.studio) we
-kept reinventing the same pattern: a script that creates a dated Markdown file
-from a template, with frontmatter for date, author, tags, and draft status.
-Each implementation had slightly different directory structures, section headers,
-and filenames. The core concept was always the same.
+Across multiple projects we kept reinventing the same pattern: a script that
+creates a dated Markdown file from a template, with frontmatter for date,
+author, tags, and draft status.  Each implementation had slightly different
+directory structures, section headers, and filenames. The core concept was
+always the same.
 
 ## Solution
 
@@ -33,35 +33,48 @@ worklog-opsdevnz
 
 # Create yesterday's worklog
 worklog-opsdevnz --previous
+
+# Override the editor for this run
+worklog-opsdevnz --editor nvim
 ```
 
+## Configuration
+
+Each project gets a `worklog.toml` at its root:
+
+```toml
+worklog_dir = "docs/worklog"
+structure = "year"           # "flat", "year", or "year-month"
+author = "Your Name"
+default_tags = ["worklog", "log"]
 
 [[sections]]
-title = "✅ Completed"
-content = ""
+title = "Focus for Today"
 
 [[sections]]
-title = "🧠 Notes"
-content = ""
+title = "Completed"
 
 [[sections]]
-title = "⏳ Next"
-content = ""
+title = "Notes"
+
+[[sections]]
+title = "Next"
 ```
 
 ## Scope
 
 **WorkLog DOES:**
-- Create dated Markdown worklog entries from templates
+- Create dated Markdown worklog entries with YAML frontmatter
 - Per-project configuration via `worklog.toml`
-- List and browse existing entries
-- Open entries in configured editor
+- Open entries in configured editor (`$VISUAL` / `$EDITOR`)
+- Three directory structure modes: flat, year, year-month
 
-**WorkLog DOES NOT (out of scope for 0.0.1):**
+**WorkLog DOES NOT (out of scope for 0.0.2):**
 - Zensical blog integration (see design doc)
 - Auto-generated index pages
 - Retro template support (planned for 0.1.0)
 - Time tracking / timesheet aggregation
+- `list`, `init`, or `create` subcommands (planned for 0.1.0)
 
 ## Requirements
 

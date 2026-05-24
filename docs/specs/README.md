@@ -229,11 +229,11 @@ The `worklog.toml` file supports the following fields:
 
 | FR | Requirement | Status | Evidence |
 |----|-------------|--------|----------|
-| FR-1.1 | Basic creation with frontmatter + sections | 📋 Planned | Porting from prototype |
-| FR-2.1 | Config discovery (TOML/YAML, walk-up, defaults) | 📋 Planned | Porting from prototype |
-| FR-3.1-3.3 | Structure modes (flat/year/year-month) | 📋 Planned | Porting from prototype |
-| FR-4.1-4.2 | Editor integration | 📋 Planned | Porting from prototype |
-| FR-6.1-6.3 | Click CLI with `-p` and `-e` flags | 📋 Planned | New implementation |
+| FR-1.1 | Basic creation with frontmatter + sections | ✅ Implemented | `template.py`, `cli.py` |
+| FR-2.1 | Config discovery (TOML/YAML, walk-up, defaults) | ✅ Implemented | `config.py`, 6 tests |
+| FR-3.1-3.3 | Structure modes (flat/year/year-month) | ✅ Implemented | `paths.py`, 4 tests |
+| FR-4.1-4.2 | Editor integration | ✅ Implemented | `cli.py:_open_editor` |
+| FR-6.1-6.3 | Click CLI with `-p` and `-e` flags | ✅ Implemented | `cli.py:main`, 4 tests |
 
 ---
 

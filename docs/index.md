@@ -25,16 +25,13 @@ Install it once, configure it per project, and start logging.
 uv pip install -e .
 
 # Create today's worklog
-worklog-opsdevnz create
+worklog-opsdevnz
 
-# Create for a specific date with title
-worklog-opsdevnz create -d 2026-04-28 -t "Module Scaffolding"
+# Create yesterday's worklog
+worklog-opsdevnz --previous
 
-# List existing entries
-worklog-opsdevnz list
-
-# Scaffold a worklog.toml config
-worklog-opsdevnz init
+# Override the editor for this run
+worklog-opsdevnz --editor nvim
 ```
 
 ## Configuration
@@ -80,18 +77,21 @@ The tool supports three directory layouts, configured per project:
 
 ## Scope
 
-**In scope for 0.0.1 / 0.1.0:**
-- Create, list, and init commands
+**In scope for 0.0.2:**
+- Default command creates/opens today's worklog
+- `--previous` / `-p` for yesterday's entry
+- `--editor` / `-e` to override editor
 - Per-project configuration via `worklog.toml`
 - Three directory structure modes
 - Editor integration (`$VISUAL` / `$EDITOR`)
-- Template support (custom + retro templates)
 
-**Out of scope (deferred):**
+**Out of scope (planned for 0.1.0+):**
+- `list`, `init`, `create` subcommands
 - Zensical blog integration — see [design decision](design/worklog-as-blog.md)
 - RSS feed generation
-- Auto-generated index pages (planned for 0.1.0)
+- Auto-generated index pages
 - Time tracking / timesheet aggregation
+- Template support (custom + retro templates)
 
 ## Development
 

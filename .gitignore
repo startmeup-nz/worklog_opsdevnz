@@ -27,3 +27,13 @@ htmlcov/
 
 # Generated docs
 site/
+
+# Editor swap files
+*.swp
+*.swo
+
+# Build caches
+.cache/
+
+# Docs site config (not needed until 0.1.0 docs are ready)
+zensical.toml
