@@ -39,7 +39,7 @@ jobs:
             --index-url https://test.pypi.org/simple/ \
             --extra-index-url https://pypi.org/simple/ \
             worklog-opsdevnz
-           /tmp/smoketest/bin/worklog-opsdevnz --version
+          /tmp/smoketest/bin/worklog-opsdevnz --version
 
   pypi:
     needs: test-pypi

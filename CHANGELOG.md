@@ -13,8 +13,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Automated release pipeline: Test PyPI gate + smoke test → real PyPI via
   OIDC Trusted Publishing (NFR-8)
 - `docs/release-process.md` — step-by-step Trusted Publishing setup guide
-- `docs/runbooks/module-promotion.md` — module incubation → published workflow
-- Module promoted to published: submodule under `public/opsdev.nz/modules/`
 
 ### Changed
 - CI: `test.yml` and `publish.yml` now use `uv` for dependency management
