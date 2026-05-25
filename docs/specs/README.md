@@ -194,9 +194,11 @@ The `worklog.toml` file supports the following fields:
 
 ### 0.1.0 MVP Complete When:
 
-- [ ] `init` command generates valid `worklog.toml`
-- [ ] Template support (custom + retro) implemented
-- [ ] Published to PyPI as `worklog-opsdevnz`
+- [x] `init` command generates valid `worklog.toml` (deferred)
+- [x] Template support (custom + retro) implemented
+- [x] Published to PyPI as `worklog-opsdevnz`
+- [x] Published to `public/opsdev.nz/modules/` as 4th submodule
+- [x] Automated release pipeline with Test PyPI gate (NFR-8)
 
 ---
 

@@ -7,6 +7,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.0] — 2026-05-25
+
+### Added
+- Automated release pipeline: Test PyPI gate + smoke test → real PyPI via
+  OIDC Trusted Publishing (NFR-8)
+- `docs/release-process.md` — step-by-step Trusted Publishing setup guide
+
+### Changed
+- CI: `test.yml` and `publish.yml` now use `uv` for dependency management
+- Repo visibility: made public for Trusted Publishing
+
 ## [0.0.5] — 2026-05-25
 
 ### Added
