@@ -27,8 +27,8 @@ uv pip install -e .
 # Create today's worklog
 worklog-opsdevnz
 
-# Create yesterday's worklog
-worklog-opsdevnz --previous
+# Show version
+worklog-opsdevnz --version
 
 # Override the editor for this run
 worklog-opsdevnz --editor nvim
