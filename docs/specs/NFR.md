@@ -5,7 +5,7 @@
 **Status:** Draft  
 **Created:** 2026-04-28
 
-> The "Spec Last Updated" date is auto-generated from git history by `specmaint sync-metadata`.
+> The "Spec Last Updated" date reflects the most recent change to this document.
 
 ---
 
@@ -55,8 +55,7 @@ def resolve_path(config: dict[str, Any], iso_date: str, title_suffix: str | None
 
 ### NFR-2.3: CLI Framework
 
-**Requirement:** The CLI MUST use Click (not argparse) for consistency with other
-OpsDev.nz modules (specmaint, yalh, sprintmaint).
+**Requirement:** The CLI MUST use Click (not argparse) for consistency with other OpsDev.nz modules.
 
 **Rationale:**
 - Click provides subcommand groups, better help text, and consistent UX

@@ -1,38 +1,18 @@
-# WorkLog OpsDev.NZ
-
-**Status:** Development — see pyproject.toml for version
+# worklog-opsdevnz
 
 Configurable CLI tool for creating and managing dated development worklogs.
 Generates Markdown entries with YAML frontmatter from per-project templates.
 
-## Problem
-
-Across multiple projects we kept reinventing the same pattern: a script that
-creates a dated Markdown file from a template, with frontmatter for date,
-author, tags, and draft status.  Each implementation had slightly different
-directory structures, section headers, and filenames. The core concept was
-always the same.
-
-## Solution
-
-`worklog-opsdevnz` formalises this pattern into a single published module:
-
-- **Per-project config** — `worklog.toml` controls directory structure, sections,
-  author, tags, and filename patterns
-- **Three structure modes** — `flat`, `year`, or `year-month` directory layouts
-- **YAML frontmatter** — date, title, author, tags, draft status
-- **Configurable sections** — each project defines its own section headers
-- **Editor integration** — opens new entries in `$VISUAL` / `$EDITOR`
-- **List existing entries** — browse worklogs with `--list`
-
 ## Quick Start
 
 ```bash
+pip install worklog-opsdevnz
+
 # Create today's worklog
 worklog-opsdevnz
 
-# Create yesterday's worklog
-worklog-opsdevnz --previous
+# Show installed version
+worklog-opsdevnz --version
 
 # Override the editor for this run
 worklog-opsdevnz --editor nvim
@@ -46,6 +26,7 @@ Each project gets a `worklog.toml` at its root:
 worklog_dir = "docs/worklog"
 structure = "year"           # "flat", "year", or "year-month"
 author = "Your Name"
+editor = "nvim"              # optional, overridden by -e / $VISUAL / $EDITOR
 default_tags = ["worklog", "log"]
 
 [[sections]]
@@ -61,34 +42,30 @@ title = "Notes"
 title = "Next"
 ```
 
-## Scope
+## Features
 
-**WorkLog DOES:**
-- Create dated Markdown worklog entries with YAML frontmatter
 - Per-project configuration via `worklog.toml`
-- Open entries in configured editor (`$VISUAL` / `$EDITOR`)
-- Three directory structure modes: flat, year, year-month
-
-**WorkLog DOES NOT (out of scope for 0.0.2):**
-- Zensical blog integration (see design doc)
-- Auto-generated index pages
-- Retro template support (planned for 0.1.0)
-- Time tracking / timesheet aggregation
-- `list`, `init`, or `create` subcommands (planned for 0.1.0)
+- Three directory structure modes: `flat`, `year`, `year-month`
+- YAML frontmatter: date, author, tags, draft status
+- Configurable section headers per project
+- Editor integration: `-e` flag → config → `$VISUAL` → `$EDITOR`
+- `--version` flag for installed version
 
 ## Requirements
 
 - Python 3.12+
 - See [pyproject.toml](pyproject.toml) for full dependencies
 
-## Related
+## Documentation
 
+- [Release Process](docs/release-process.md)
 - [Functional Requirements](docs/specs/README.md)
+- [Non-Functional Requirements](docs/specs/NFR.md)
 - [Design Decisions](docs/design/README.md)
 - [User Stories](docs/stories/README.md)
 
----
+## Related
 
-**Last Updated:** 2026-05-23
-**Status:** Development (migrated to module template)
-**Maintainer:** OpsDev.nz Collective
+- [PyPI](https://pypi.org/project/worklog-opsdevnz/)
+- [GitHub](https://github.com/startmeup-nz/worklog_opsdevnz)
+- [OpsDev.nz Collective](https://opsdev.nz)

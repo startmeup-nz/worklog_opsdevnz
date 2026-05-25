@@ -19,7 +19,7 @@ from worklog_opsdevnz.template import generate_content
     "-e",
     "--editor",
     default=None,
-    help="Override the editor command (default: $VISUAL or $EDITOR).",
+    help="Override the editor command (overrides config, $VISUAL, $EDITOR).",
 )
 def main(editor: str | None) -> None:
     """Create or open today's worklog entry."""
@@ -36,12 +36,12 @@ def main(editor: str | None) -> None:
         target.write_text(content)
         print(f"Created: {target}")
 
-    _open_editor(target, editor)
+    _open_editor(target, editor, config.get("editor"))
 
 
-def _open_editor(path: str | Path, override: str | None = None) -> None:
+def _open_editor(path: str | Path, override: str | None = None, config_editor: str | None = None) -> None:
     """Open the file in the configured editor, or print the path."""
-    editor = _resolve_editor(override)
+    editor = _resolve_editor(override, config_editor)
     if editor:
         editor_cmd = shutil.which(editor)
         if editor_cmd:
@@ -54,11 +54,11 @@ def _open_editor(path: str | Path, override: str | None = None) -> None:
         print(f"No editor configured. Path: {path}")
 
 
-def _resolve_editor(override: str | None = None) -> str | None:
-    """Resolve editor from CLI override, $VISUAL, or $EDITOR."""
+def _resolve_editor(override: str | None = None, config_editor: str | None = None) -> str | None:
+    """Resolve editor from CLI, config, $VISUAL, or $EDITOR."""
     import os
 
-    for candidate in (override, os.environ.get("VISUAL"), os.environ.get("EDITOR")):
+    for candidate in (override, config_editor, os.environ.get("VISUAL"), os.environ.get("EDITOR")):
         if candidate:
             return candidate
     return None
