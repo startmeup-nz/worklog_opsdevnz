@@ -16,8 +16,6 @@ This spec follows the OpsDev.nz versioning model:
 | Module Version | `pyproject.toml` | Version of the module being specified |
 | Spec Last Updated | Git history | When this spec was last modified |
 
-Use `specmaint sync-metadata` to sync both fields from their sources.
-
 ---
 
 ## Related Documents
@@ -78,6 +76,8 @@ The `worklog.toml` file supports the following fields:
 | `suffix` | string | No | `"worklog"` | Filename suffix (e.g. `23-05-2026-worklog.md`) |
 | `author` | string | No | `$USER` or `"unknown"` | Default author name |
 | `default_tags` | list | No | `["internal", "log"]` | Default YAML tags |
+| `editor` | string | No | (unset) | Preferred editor command (e.g. `"nvim"`, `"code"`). Overridden by `-e`/`--editor` CLI flag and `$VISUAL`/`$EDITOR` env vars |
+| `template` | string | No | (unset) | Path to a custom Markdown template (supports `{{DATE}}`, `{{TITLE}}` placeholders) |
 | `sections` | list | No | (see defaults) | Ordered section headers |
 
 ### FR-2.3: Config Initialisation *(0.1.0+)*
@@ -115,8 +115,9 @@ The `worklog.toml` file supports the following fields:
 
 - **FR-4.1.1**: Tool MUST check for editor in this order:
   1. `-e` / `--editor` CLI argument
-  2. `$VISUAL` environment variable
-  3. `$EDITOR` environment variable
+  2. `editor` field in `worklog.toml` config
+  3. `$VISUAL` environment variable
+  4. `$EDITOR` environment variable
 - **FR-4.1.2**: If no editor is configured, tool MUST print the file path and exit cleanly
 - **FR-4.1.3**: Tool MUST resolve the editor command via `shutil.which()` and report
   if not found in PATH
@@ -156,18 +157,33 @@ The `worklog.toml` file supports the following fields:
 
 ---
 
-## FR-6: Template Support *(0.1.0+)*
+## FR-6: Custom Template *(future)*
 
-### FR-6.1: Custom Templates
+### FR-6.1: Template Configuration
 
-- **FR-6.1.1**: Tool MUST support a `template` field in config pointing to a Markdown file
-- **FR-6.1.2**: Template files MUST support `{{DATE}}` and `{{TITLE}}` placeholders
-- **FR-6.1.3**: If no template specified, tool MUST use the built-in default template
+- **FR-6.1.1**: Tool SHOULD support a `template` field in `worklog.toml` pointing to a
+  Markdown file. When set, the template replaces the built-in section-based body
+  generation for the worklog entry.
+- **FR-6.1.2**: Template files MAY use `{{DATE}}` and `{{TITLE}}` placeholders, which the
+  tool replaces with the current date and a title derived from the entry date.
+- **FR-6.1.3**: If no `template` field is configured, the tool MUST use the built-in
+  default (config-driven sections from the `sections` list).
 
-### FR-6.2: Retro Templates
+**Example:**
 
-- **FR-6.2.1**: Tool MUST support a separate `retro_template` field in config
-- **FR-6.2.2**: `worklog-opsdevnz create --retro` MUST use the retro template
+`worklog.toml`:
+```toml
+template = "my-worklog-template.md"
+```
+
+`my-worklog-template.md`:
+```markdown
+# {{TITLE}}
+
+Date: {{DATE}}
+
+Write whatever you want here — no predefined sections.
+```
 
 ---
 
@@ -195,7 +211,6 @@ The `worklog.toml` file supports the following fields:
 ### 0.1.0 MVP Complete When:
 
 - [x] `init` command generates valid `worklog.toml` (deferred)
-- [x] Template support (custom + retro) implemented
 - [x] Published to PyPI as `worklog-opsdevnz`
 - [x] Published to `public/opsdev.nz/modules/` as 4th submodule
 - [x] Automated release pipeline with Test PyPI gate (NFR-8)

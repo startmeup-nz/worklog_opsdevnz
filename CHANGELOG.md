@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.1] — 2026-05-25
+
+### Added
+- `editor` field in `worklog.toml` config — preferred editor, overridden by
+  `-e` flag, `$VISUAL`, and `$EDITOR`
+- Tests for config-based editor resolution and CLI override behaviour
+
+### Changed
+- README refreshed — removed stale scope section, `--list`, and `--previous`;
+  added editor config example and updated for 0.1.0 reality
+- `-e`/`--editor` help text updated to reflect resolution order
+
 ## [0.1.0] — 2026-05-25
 
 ### Added
