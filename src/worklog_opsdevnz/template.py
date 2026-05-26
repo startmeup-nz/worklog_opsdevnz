@@ -36,11 +36,32 @@ def generate_body(config: dict[str, Any]) -> str:
     return "\n".join(lines)
 
 
+def render_template(template_path: str, iso_date: str) -> str:
+    """Render a custom Markdown template with placeholder substitution."""
+    title = f"Work Log - {iso_date}"
+    with open(template_path) as f:
+        content = f.read()
+    content = content.replace("{{DATE}}", iso_date)
+    content = content.replace("{{TITLE}}", title)
+    return content
+
+
 def generate_content(
     config: dict[str, Any],
     iso_date: str,
 ) -> str:
-    """Generate full worklog content."""
+    """Generate full worklog content.
+
+    If a 'template' field is set in config, renders that file as the body.
+    Otherwise uses the built-in sections-based body.
+    Frontmatter is always generated regardless of template.
+    """
     frontmatter = generate_frontmatter(config, iso_date)
-    body = generate_body(config)
+
+    template_path = config.get("template")
+    if template_path:
+        body = render_template(template_path, iso_date)
+    else:
+        body = generate_body(config)
+
     return f"{frontmatter}\n{body}"

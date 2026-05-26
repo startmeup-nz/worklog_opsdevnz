@@ -140,7 +140,7 @@ The `worklog.toml` file supports the following fields:
 
 ---
 
-## FR-6: Custom Template *(future)*
+## FR-6: Custom Template
 
 ### FR-6.1: Template Configuration
 
