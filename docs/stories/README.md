@@ -14,6 +14,7 @@ persona and priority. Each story is a standalone file.
 | 5 | [Retrospective Entries](story-5-retro-entries.md) | Medium | 0.1.0 |
 | 6 | [Auto-Generated Index](story-6-auto-index.md) | Medium | 0.1.0 |
 | 7 | [Monorepo-Aware Config Discovery](story-7-monorepo-config-discovery.md) | High | 0.1.1 |
+| 8 | [Custom Entry Template](story-8-custom-template.md) | Medium | 0.1.3 |
 
 ---
 

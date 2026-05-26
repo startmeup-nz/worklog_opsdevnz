@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.3] — 2026-05-26
+
+### Added
+- `template` field in `worklog.toml` — point to a custom Markdown file for
+  the worklog body, with `{{DATE}}` and `{{TITLE}}` placeholder substitution
+  (FR-6, Story 8)
+- 4 new tests covering template rendering, placeholder substitution, missing
+  file errors, and frontmatter preservation
+
+### Changed
+- Template paths resolved relative to config file directory (consistent with
+  `worklog_dir` resolution)
+
 ## [0.1.2] — 2026-05-26
 
 ### Fixed

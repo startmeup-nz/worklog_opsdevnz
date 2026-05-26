@@ -67,5 +67,8 @@ def get_config() -> dict[str, Any]:
         worklog_dir = merged["worklog_dir"]
         if not Path(worklog_dir).is_absolute():
             merged["worklog_dir"] = str(config_path.parent / worklog_dir)
+        template = merged.get("template")
+        if template and not Path(template).is_absolute():
+            merged["template"] = str(config_path.parent / template)
         return merged
     return dict(DEFAULT_CONFIG)

@@ -35,4 +35,12 @@
 | FR-2.1.1 | Cwd-first config discovery (fix parent-first bug) | ✅ Implemented | `config.py:find_config`, Story 7 |
 | FR-2.1.2 | Nearest config wins (clarified) | ✅ Implemented | `config.py:find_config`, `test_find_config_nearest_wins` |
 
+## v0.1.3 (current)
+
+| FR | Requirement | Status | Evidence |
+|----|-------------|--------|----------|
+| FR-6.1.1 | Custom template file support | ✅ Implemented | `template.py:render_template`, Story 8 |
+| FR-6.1.2 | `{{DATE}}` and `{{TITLE}}` placeholders | ✅ Implemented | `template.py:render_template`, 4 tests |
+| FR-6.1.3 | Fallback to built-in sections when no template | ✅ Implemented | `template.py:generate_content`, `test_generate_content_without_template` |
+
 ## v0.1.x (planned)

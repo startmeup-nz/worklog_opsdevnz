@@ -35,3 +35,12 @@
 - [x] Cwd-first config search (fix parent-first bug in `config.py`)
 - [x] Tests updated for new search order
 - [x] Backward compatibility confirmed: standalone repos unaffected
+
+## 0.1.3 Custom Template When:
+
+- [x] `template` field in `worklog.toml` renders when set
+- [x] `{{DATE}}` and `{{TITLE}}` placeholders substituted
+- [x] Template path resolved relative to config file
+- [x] Template file not found → error
+- [x] No template field → falls back to sections body
+- [x] Frontmatter always generated (templates only affect body)
