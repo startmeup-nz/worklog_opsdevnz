@@ -26,6 +26,18 @@ def test_find_config_walks_up(tmp_path: Path):
     assert found.parent == tmp_path
 
 
+def test_find_config_nearest_wins(tmp_path: Path):
+    """When both parent and subdir have a config, the nearest (subdir) wins."""
+    (tmp_path / "worklog.toml").write_text('author = "parent-user"')
+    sub = tmp_path / "sub"
+    sub.mkdir()
+    (sub / "worklog.toml").write_text('author = "sub-user"')
+
+    found = find_config(start=sub)
+    assert found is not None
+    assert found.parent == sub  # nearest wins, not parent
+
+
 def test_find_config_not_found(tmp_path: Path):
     assert find_config(start=tmp_path) is None
 

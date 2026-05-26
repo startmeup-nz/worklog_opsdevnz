@@ -69,7 +69,7 @@ The tool supports three directory layouts, configured per project:
 
 ## Documentation
 
-- **[Specification](specs/README.md)** — Functional requirements
+- **[Specifications](specs/)** — Functional and non-functional requirements
 - **[Non-Functional Requirements](specs/NFR.md)** — Code quality and design guidelines
 - **[Release Process](release-process.md)** — Trusted Publishing (OIDC) and CI/CD pipeline
 - **[User Stories](stories/README.md)** — Persona-driven acceptance criteria

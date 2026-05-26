@@ -178,7 +178,7 @@ This is tracked as a design investigation item.
 
 ## Related
 
-- [specs/README.md](../specs/README.md) FR-1, FR-5 — Entry creation and listing
+- [FR-1, FR-5: Entry creation and CLI interface](../specs/functional-requirements.md)
 - [specs/NFR.md](../specs/NFR.md) NFR-4 — Cross-platform compatibility
 - [public/opsdev.nz/docs/worklog/index.md](../../../../public/opsdev.nz/docs/worklog/index.md)
   — Current worklog documentation

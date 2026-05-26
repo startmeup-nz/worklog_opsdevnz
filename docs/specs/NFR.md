@@ -200,6 +200,55 @@ release tag and the package is functional.
 
 ---
 
+## NFR-9: Security & Config Trust *(new — 2026-05-26)*
+
+### NFR-9.1: Config Trust Model
+
+**Requirement:** The tool MUST operate on the assumption that config files
+in the project tree are trusted. This is the same model used by `make`,
+`npm`, `eslint`, and other CLI tools that discover configuration by
+walking up the directory tree.
+
+**Rationale:** Filesystem-based trust is the standard security model for
+developer tooling. Adding authentication, sandboxing, or prompts would
+create friction without meaningfully improving security — an attacker
+with filesystem access can already place malicious `.bashrc`,
+`Makefile`, or `package.json` files.
+
+### NFR-9.2: Editor Path Warning
+
+**Requirement:** If the `editor` value in `worklog.toml` contains a path
+separator (`/`), the tool MUST print a warning to stderr before invoking
+the editor. The warning must be informational only — it must not block
+execution.
+
+**Rationale:** An attacker who places a malicious `worklog.toml` in a
+shared or writable directory could set `editor = "/tmp/malware.sh"`. The
+warning draws attention to non-command-name editor values — the most
+realistic injection vector — while allowing legitimate use of custom
+editor scripts and absolute paths.
+
+### NFR-9.3: Config Discovery Transparency *(verbose mode)*
+
+**Requirement:** When `--verbose` is passed, the tool MUST print the
+config file path and its resolved `worklog_dir` to stderr before
+creating or opening an entry.
+
+**Rationale:** Transparent config discovery lets users verify which
+config file was selected. This helps debug unexpected behaviour and
+makes it visible if a config from an unexpected location is being used.
+
+### NFR-9.4: File Write Safety *(future)*
+
+**Requirement:** The tool SHOULD verify that the resolved worklog file
+path stays within the intended `worklog_dir`. If path traversal is
+detected (e.g. `worklog_dir = "../"`), the tool SHOULD refuse to
+write.
+
+**Note:** Aspirational for 0.1.1. Not implemented yet.
+
+---
+
 ## Compliance Checklist
 
 | Requirement | Status | Notes |
@@ -218,6 +267,10 @@ release tag and the package is functional.
 | Single source of truth for version | ✅ Complete | `importlib.metadata.version()` in `__init__.py` |
 | Dry-run safety | 📋 Planned | Test PyPI-only publish for validation |
 | Smoketest verification | 📋 Planned | Install from Test PyPI, run `--version` |
+| Config trust model (NFR-9.1) | 📋 Documented | `docs/design/security-trust-model.md` |
+| Editor path warning (NFR-9.2) | 📋 In design | `docs/design/security-trust-model.md` |
+| Config discovery transparency (NFR-9.3) | 📋 In design | `--verbose` flag planned |
+| File write safety (NFR-9.4) | 🔮 Future | Path traversal guard — aspirational |
 
 ---
 

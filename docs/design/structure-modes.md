@@ -100,5 +100,5 @@ This ensures:
 
 ## Related
 
-- [specs/README.md](../specs/README.md) FR-3 — Directory structure modes
+- [FR-3: Directory Structure Modes](../specs/functional-requirements.md) — Directory structure modes
 - [worklog-as-blog.md](worklog-as-blog.md) — Zensical blog integration decision
