@@ -27,6 +27,7 @@ worklog_dir = "docs/worklog"
 structure = "year"           # "flat", "year", or "year-month"
 author = "Your Name"
 editor = "nvim"              # optional, overridden by -e / $VISUAL / $EDITOR
+template = "my-template.md"  # optional custom body template
 default_tags = ["worklog", "log"]
 
 [[sections]]
@@ -48,6 +49,7 @@ title = "Next"
 - Three directory structure modes: `flat`, `year`, `year-month`
 - YAML frontmatter: date, author, tags, draft status
 - Configurable section headers per project
+- Custom body templates with `{{DATE}}` and `{{TITLE}}` placeholders
 - Editor integration: `-e` flag → config → `$VISUAL` → `$EDITOR`
 - `--version` flag for installed version
 
