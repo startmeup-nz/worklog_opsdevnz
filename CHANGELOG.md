@@ -7,6 +7,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.1.2] — 2026-05-26
+
+### Fixed
+- Config discovery now checks cwd first before walking up parent directories,
+  fixing a bug where parent `worklog.toml` files could silently override
+  project-local configs (#7, FR-2.1.1/2.1.2, Story 7)
+
+### Added
+- `test_find_config_nearest_wins` — verifies subdirectory config takes
+  priority over parent config
+- Security design doc (`docs/design/security-trust-model.md`) — config
+  trust model, editor path warning, threat analysis
+- Design doc for config discovery strategy
+  (`docs/design/config-discovery-strategy.md`) — documents the cwd-first
+  approach and why `.git` boundaries were rejected
+- NFR-9: Security & Config Trust non-functional requirements
+
+### Changed
+- Specs modularized: README → index, FRs, acceptance criteria, and
+  implementation status in separate files
+- Stories extracted from inline README into individual files
+
 ## [0.1.1] — 2026-05-25
 
 ### Added

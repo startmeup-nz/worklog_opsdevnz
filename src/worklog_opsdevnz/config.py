@@ -26,7 +26,7 @@ def find_config(start: Path | None = None) -> Path | None:
     """Search for worklog.toml or worklog.yaml from start up to root."""
     if start is None:
         start = Path.cwd()
-    candidates = list(start.parents) + [start]
+    candidates = [start] + list(start.parents)
     for candidate in candidates:
         for name in ("worklog.toml", "worklog.yaml", "worklog.yml"):
             path = candidate / name
